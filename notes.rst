@@ -295,3 +295,17 @@ out the limits of "simple checks" and "great benefit".
 
     And browser tools may even simple stuff for you...
     (that's getting a bit fuzzy)
+
+Possibly useful links
+---------------------
+
+* https://passo.uno/prose-linters-implement-workplace-howto/
+* https://www.kolide.com/blog/is-grammarly-a-keylogger-what-can-you-do-about-it
+  (but also points out how valuable (something like) Grammarly is, and not to
+  forget that. Links to LanguageTool_ as an alternative that can
+  `run using a local server`_
+* LanguageTool_ open source, by default uses the cloud, but can
+  `run using a local server`_
+
+.. _LanguageTool: https://languagetool.org/
+.. _`run using a local server`: https://dev.languagetool.org/http-server
