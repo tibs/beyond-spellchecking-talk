@@ -178,7 +178,7 @@ out the limits of "simple checks" and "great benefit".
 * Spelling
 
   * This is not a recognised word
-  * ``adn`` ``and``, ``supercede`` -> ``supersede`` simple N distance suggestions
+  * ``adn`` -> ``and``, ``supercede`` -> ``supersede`` simple N distance suggestions
   * anything beyond that is probably best thought of under the other sections
 
 * ...
@@ -221,8 +221,13 @@ out the limits of "simple checks" and "great benefit".
 
 * Original markup
 
-  * Catch use of markdown style links (``[words](url)``) in a reStructuredText
-    document (suggest ``\`words <url>\`_``)
+  * Catch use of markdown style links::
+   
+       [words](url)
+
+    in a reStructuredText document - suggest::
+
+       `words <url>`_
 
 * "Canned" styles, providing a curated set of checks
 
