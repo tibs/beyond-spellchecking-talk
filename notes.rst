@@ -306,6 +306,13 @@ Possibly useful links
   `run using a local server`_
 * LanguageTool_ open source, by default uses the cloud, but can
   `run using a local server`_
+* https://news.ycombinator.com/item?id=32236608 an interesting discussion of
+  LanguageTool on HackerNews. Includes an example of writing rules for it,
+  where the commentator says "The art is trying to writing a rule without too
+  much false positives."
+* I have the impression that people trying to enter this space are going for
+  browser and cloud based solutions, and I can understand why, but it still
+  always means privacy concerns. Plus not being able to work offline(!)
 
 .. _LanguageTool: https://languagetool.org/
 .. _`run using a local server`: https://dev.languagetool.org/http-server
