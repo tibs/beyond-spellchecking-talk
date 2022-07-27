@@ -1,18 +1,18 @@
+=============================================================
 Beyond spell checking - what else can we check automatically?
 =============================================================
 
-
 (Was "Linting your docs")
+
+Talk to be given at WtD Prague 2022
 
 .. contents::
 
-Targets
--------
-
-* WtD Prague 2022
+Proposal
+========
 
 Abstract
-~~~~~~~~
+--------
 
 (= 178 words)
 
@@ -36,7 +36,7 @@ the example of Aiven's open source developer documentation. I'll make sure to
 include my favourite check, for the correct usage of `®` on product names.
 
 Who and Why
-~~~~~~~~~~~
+-----------
 
 (= 239 words)
 
@@ -67,7 +67,7 @@ about how we use these techniques in our own environment, and specifically in
 our github review process.
 
 Other Information
-~~~~~~~~~~~~~~~~~
+-----------------
 
 (= 134 words)
 
@@ -85,7 +85,7 @@ relevant part of vale, now fixed after my first PR to the project.
 
 
 Write the Docs Writing Day
---------------------------
+==========================
 
 The first proper day of WtD Prague is normally a "Writing" day, where people
 can collaborate on tasks, or work on individual tasks (in company).
@@ -96,8 +96,8 @@ issues I want to work on. ("Having a table" just means suggesting it on the
 day.)
 
 
-My Notes
---------
+Early Notes
+===========
 
 Why this is a good thing to do, and lots of examples of how doing simple
 things can give good results.
@@ -163,7 +163,7 @@ surprisingly powerful.
 -------
 
 Specific notes
---------------
+==============
 
 Quick (very quick) history of the term linting
 
@@ -222,7 +222,7 @@ out the limits of "simple checks" and "great benefit".
 * Original markup
 
   * Catch use of markdown style links::
-   
+
        [words](url)
 
     in a reStructuredText document - suggest::
@@ -311,7 +311,7 @@ even *show up* in CI. It also allows domain experts to fix things - this can
 be important for some things (the ® check again).
 
 For reference: what vale provides
----------------------------------
+=================================
 
 In the following, "token" means a word, phrase or regular expression.
 
@@ -411,7 +411,7 @@ dictionaries, but actually isn't for "reasons" (mainly that "adds to the
 exception list for all styles", which is a bit of a broad brush).
 
 Possibly useful links
----------------------
+=====================
 
 * https://passo.uno/prose-linters-implement-workplace-howto/
 * https://www.kolide.com/blog/is-grammarly-a-keylogger-what-can-you-do-about-it
