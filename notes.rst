@@ -320,8 +320,11 @@ with ``Flink``, because (a) we're very unlikely to use the word ``flick``,
 (b) we do use the product name ``Flink`` and (c) we've observed this
 particular misspelling more than once in practice.
 
-For reference: what vale provides
-=================================
+For reference: particular tools
+===============================
+
+What vale provides
+------------------
 
 In the following, "token" means a word, phrase or regular expression.
 
@@ -420,6 +423,90 @@ complain about immediately). This *looks* as if it is a good alternative to
 dictionaries, but actually isn't for "reasons" (mainly that "adds to the
 exception list for all styles", which is a bit of a broad brush).
 
+Some notes on what Grammarly provides
+-------------------------------------
+
+* Spelling and grammar checking.
+
+  * grammar mistakes
+  * suggested spelling corrections
+  * suggested punctuation corrections
+  * with premium, word choice, tone and more.
+
+* Plagiarism check
+
+* Suggestions for synonyms to give better reading
+
+* Tonal analysis (how your text may "sound" to readers)
+
+* Rules for term usage, company name spelling/presentation, etc.
+
+* Snippet library
+
+* Analytics
+
+I spent a little bit of time looking to see if I could find out how to
+define rules for use in Grammarly, and couldn't find anything.
+
+https://geediting.com/grammarly-review-how-good-is-it-an-editor-weighs-in/
+seems to suggest that there's broad-scope customisation per document (to
+give a general idea of what kind of feedback is wanted for that document).
+
+Big question - does it understand markup? Since it's basically catching
+key events (what you type), it doesn't really sound like their sort of
+thing.
+
+Some notes on what LanguageTool provides
+----------------------------------------
+
+https://languagetool.org/
+
+Source code at https://github.com/languagetool-org/languagetool
+
+Multi-language
+
+https://dev.languagetool.org/development-overview is the documentation
+on how to write new error detection rules. They're stored as XML files.
+
+As to checking with markup - https://github.com/languagetool-org/languagetool/issues/445
+(closed in 2018) suggests it's not something they see as their business to do,
+nor do they have the resources. The best suggestion looks to be "convert to
+plain text and check that". But see LTeX_ below...
+
+LTeX
+~~~~
+
+https://valentjn.github.io/ltex/ - Grammar/Spell Checker Using LanguageTool
+with Support for LATEX, Markdown, and Others
+
+https://github.com/valentjn/vscode-ltex
+
+All in one solution, offline checking, LSP (language server protocol)
+support. Does support reStructuredText, at "Good" level. Works with
+Emacs, Vim, VS Code.
+
+``brew install ltex-ls``
+
+I think this looks like a viable way to use LanguageTool with markup.
+
+Perhaps it compares with the vale server, in some ways, as well.
+
+Other alternatives to vale
+--------------------------
+
+The vale documentation mentions ``textlint`` and ``RedPen`` as alternatives
+that handle markdown and reStructuredText (and other things), and ``alex``
+as just handling markdown. It also benchmarks vale as being faster than
+its competitors.
+
+See also https://lwn.net/Articles/822969/ (Tools to improve Englist text) from 2020.
+
+* https://textlint.github.io/
+* https://alexjs.com/
+* http://proselint.com/
+* https://redpen.cc/ (don't confuse with ``redpen.<anything-else>``!)
+
+
 Possibly useful links
 =====================
 
@@ -428,6 +515,8 @@ Possibly useful links
   (but also points out how valuable (something like) Grammarly is, and not to
   forget that. Links to LanguageTool_ as an alternative that can
   `run using a local server`_
+* https://geediting.com/grammarly-review-how-good-is-it-an-editor-weighs-in/
+  gives a counterpoint - this author is an enthusiactic user
 * LanguageTool_ open source, by default uses the cloud, but can
   `run using a local server`_
 * https://news.ycombinator.com/item?id=32236608 an interesting discussion of
@@ -437,6 +526,11 @@ Possibly useful links
 * I have the impression that people trying to enter this space are going for
   browser and cloud based solutions, and I can understand why, but it still
   always means privacy concerns. Plus not being able to work offline(!)
+* https://opensource.com/article/20/3/open-source-writing-tools from 2020
+  has some interesting suggestions for open source alternatives to Grammarly
+  - basically ``flyspell`` in emacs, LanguageTool via its API integration
+  with editors, and the Python ``proselint`` package for grammar advice
+  and style checking.
 
 .. _LanguageTool: https://languagetool.org/
 .. _`run using a local server`: https://dev.languagetool.org/http-server
