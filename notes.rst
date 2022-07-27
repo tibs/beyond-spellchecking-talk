@@ -501,10 +501,15 @@ its competitors.
 
 See also https://lwn.net/Articles/822969/ (Tools to improve Englist text) from 2020.
 
-* https://textlint.github.io/
-* https://alexjs.com/
-* http://proselint.com/
-* https://redpen.cc/ (don't confuse with ``redpen.<anything-else>``!)
+* https://textlint.github.io/ - Rules are written as plugins using JavaScript.
+* https://alexjs.com/ - "Catch insensitive, inconsiderat writing". There is a vale
+  plugin for at least some of the same functionality
+* http://proselint.com/ and https://github.com/amperser/proselint - Rules are written
+  as plugins using Python
+* https://redpen.cc/ (don't confuse with ``redpen.<anything-else>`` - for imstance,
+  the ``.cc`` domain appears to use real people to do checking!) and
+  https://github.com/redpen-cc/redpen/ - Looks as if custom validators can be
+  added as plugins in Java or JavaScript
 
 
 Possibly useful links
