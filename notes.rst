@@ -310,6 +310,106 @@ turn again, that brings us back to the warning/error discussion - what should
 even *show up* in CI. It also allows domain experts to fix things - this can
 be important for some things (the ® check again).
 
+For reference: what vale provides
+---------------------------------
+
+In the following, "token" means a word, phrase or regular expression.
+
+The documentation (https://vale.sh/docs/topics/styles) doesn't always
+list all of the Keys that apply to each style, so the following is
+likely to be incomplete on that.
+
+``existence``
+
+  Look to see if particular tokens exist. Supports exceptions.
+
+  "Consider not using 'bad phrase'"
+
+``substitution``
+
+  Looks for token A and suggests token B instead. Supports exceptions.
+
+  "Consider using 'B' instead of 'A'"
+
+  *We use this*
+
+``occurrence``
+
+   Enforces minimum or maximum times a token appears. Supports scope
+   - e.g., ``sentence``
+
+   "More than 3 commas in sentence"
+
+``repetition``
+
+   Looks for repetition of its tokens.
+
+   "'the' is repeated"
+
+``consistency``
+
+   Ensures key and value do not occur in the same scope.
+
+   "Inconsistent spelling of 'center'"
+
+``conditional``
+
+  Ensures that if token A is present, then so it token B. Supports exceptions, scope.
+
+  Terminology on this one is a bit confusing.
+
+  "WHO has no definition"
+
+  "At least one 'PostgreSQL' must be marked as ®"
+
+  *We use this*
+
+``capitalization``
+
+  Checks that the text in the specified scope is capitalized according to the chosen scheme.
+  Supports exceptions, scope.
+
+  "'Badly Capitalised Heading' should be in sentence case"
+
+  *We use this*
+
+  Note: The capitalization metrics are *not* necessarily as simple as one might expect.
+  For instance, ``$sentence`` isn't just "first word must start with a capital, rest
+  must not". This is a Good Thing in practice, if harder to explain.
+
+``metric``
+
+  Calculates one of various arbitrary metrics and reports if it is exceeded.
+
+  "Try to keep the Flesch-Kincaid grade level (%s) below 8"
+
+``spelling``
+
+  Looks up words in one or more Hunspell-compatible dictionaries. Supports filters
+  and a file of words to ignore.
+
+  "'Arglebargle' does not seem to be a word"
+
+  *We use this*
+
+  Note: uses the dictionary as a word list, but doesn't support all Hunspell
+  capabilities. For instance, it doesn't support ``KEEPCASE`` (and ``/K``).
+
+``sequence``
+
+  Allows rules that specify a sequence of NLP tokens that may or may not form
+  (be part of?) a sentence.
+
+``script``
+
+  Write a rule using arbitrary Go code (well, a Go-like scripting language)
+
+There's also a parallel accept/reject mechanism, which allows listing tokens
+to accept (add to the exception lists for all styles above) or reject (just
+complain about immediately). This *looks* as if it is a good alternative to
+dictionaries, but actually isn't for "reasons" (mainly that "adds to the
+exception list for all styles", which is a bit of a broad brush).
+
 Possibly useful links
 ---------------------
 
