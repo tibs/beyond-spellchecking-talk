@@ -310,6 +310,16 @@ turn again, that brings us back to the warning/error discussion - what should
 even *show up* in CI. It also allows domain experts to fix things - this can
 be important for some things (the ® check again).
 
+Arguably, having to write one's own configuration (beyond basic spelling and
+maybe some very general rules) is always going to be a requirement - only you
+can know what sorts of mistake occur within the particular domain, and with
+the particular people, you're working with.
+
+For instance, for us it's worth having a rule to suggest replacing ``flick``
+with ``Flink``, because (a) we're very unlikely to use the word ``flick``,
+(b) we do use the product name ``Flink`` and (c) we've observed this
+particular misspelling more than once in practice.
+
 For reference: what vale provides
 =================================
 
