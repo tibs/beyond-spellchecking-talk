@@ -320,6 +320,11 @@ with ``Flink``, because (a) we're very unlikely to use the word ``flick``,
 (b) we do use the product name ``Flink`` and (c) we've observed this
 particular misspelling more than once in practice.
 
+Looking at the various available tools, there's something to think about
+on whether new checks are written via plugins using a programming language,
+or whether there's some "higher level" abstraction (also) available. This
+is I think a good thing about Vale.
+
 For reference: particular tools
 ===============================
 
