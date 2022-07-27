@@ -296,6 +296,20 @@ out the limits of "simple checks" and "great benefit".
     And browser tools may even simple stuff for you...
     (that's getting a bit fuzzy)
 
+Hmm. Running a checker *after* writing (or in CI) versus having it run as you
+type. Pros and cons. Certain sorts of check could be very irritating (I'm
+thinking the ® check, perhaps) if they're run during typing. Not all tools
+support being run as-you-type if you're using a local editor. If you're in a
+browser, is it using a local service, or a remote? - see comments on cloud and
+privacy. Of course, not all tools can necessarily be (easily) run in CI.
+Running in CI means that not everyone needs to setup the checking - this is
+actually necessary if you're going to allow people to make contributions via
+(for instance) the GitHub web interface. And if you're going to run it in CI,
+then it is really optional whether people run it locally. Although, turn and
+turn again, that brings us back to the warning/error discussion - what should
+even *show up* in CI. It also allows domain experts to fix things - this can
+be important for some things (the ® check again).
+
 Possibly useful links
 ---------------------
 
