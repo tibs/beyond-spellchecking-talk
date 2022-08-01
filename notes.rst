@@ -167,13 +167,13 @@ out the limits of "simple checks" and "great benefit".
       Regardless, the *solution* probably needs a rule that looks at the raw
       markup (which I hope is reStructuredText and not HTML!)
 
-   * Catch use of markdown style links::
+    * Catch use of markdown style links::
 
-        [words](url)
+         [words](url)
 
-     in a reStructuredText document - suggest::
+      in a reStructuredText document - suggest::
 
-        `words <url>`_
+         `words <url>`_
 
 * "Canned" styles, providing a curated set of checks
 
