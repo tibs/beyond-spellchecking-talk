@@ -1,6 +1,6 @@
 pageSetup:
     size: null
-    width: 12cm
+    width: 16cm
     height: 9cm
     margin-top: 0cm
     margin-bottom: 0cm
@@ -13,13 +13,16 @@ pageSetup:
 
 pageTemplates:
     standardPage:
-        frames: []
-            [3%, 3%, 94%, 94%]
+        frames:
+        - - 3%
+          - 3%
+          - 94%
+          - 94%
         background: images/white.jpg
         showHeader: false
-        showFooter: false
+        showFooter: true
 
-linkColor: #1b7b88
+linkColor: "#1b7b88"
 
 styles:
     normal:
@@ -30,12 +33,35 @@ styles:
         hyphenation: false
         spaceAfter: 10
 
-    titleslideinfo:
+    ## I want this to be the title on the first slide, but not the subtitle on other slides
+    title:
+      alignment: TA_CENTER
+      fontSize: 200%
+      keepWithNext: false
+      parent: heading
+      spaceAfter: 20
+
+    ## I *could* use this as a class if I had to
+    #title-slide-title:
+    #  alignment: TA_CENTER
+    #  fontSize: 200%
+    #  keepWithNext: false
+    #  parent: heading
+    #  spaceAfter: 20
+
+    title-slide-info:
         parent: normal
         alignment: TA_CENTER
 
+    # Let's play with this
+    subtitle:
+        #fontSize: 75%
+        fontSize: 20%
+        parent: title
+        spaceBefore: 12
+
     literal:
-        textColor: #000000
+        textColor: "#000000"
 
     code:
         parent: literal
@@ -59,8 +85,3 @@ styles:
     item-list-item:
         parent: bodytext
         spaceBefore: 12
-
-    acknowledgement:
-        parent: bodytext
-        alignment: TA_RIGHT
-        fontSize: 8

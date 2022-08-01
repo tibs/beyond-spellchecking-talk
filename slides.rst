@@ -1,8 +1,8 @@
+Beyond spellchecking - What else can we check automatically
+===========================================================
 
-Making slides with reStructuredText
-===================================
 
-.. class:: titleslideinfo
+.. class:: title-slide-info
 
     By Tibs / Tony Ibbs (they / he)
 
@@ -23,6 +23,14 @@ Making slides with reStructuredText
        Spacer 0 10
 
     Slides and accompanying material at https://github.com/tibs/beyond-spellchecking
+
+.. footer::
+
+   *tony.ibbs@aiven.io* / *@much_of_a*
+
+   .. raw:: pdf
+
+      Spacer 0 5
 
 
 Here be slides

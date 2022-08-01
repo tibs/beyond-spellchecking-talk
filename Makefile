@@ -31,7 +31,7 @@ slides: make16x9
 
 .PHONY: make16x9
 make16x9:
-	$(RST2PDF) -s light16x9.style slides.rst -o slides-16x9.pdf
+	$(RST2PDF) -s light16x9.yaml slides.rst -o slides-16x9.pdf
 
 .PHONY: 16x9
 16x9:   make16x9
