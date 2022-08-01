@@ -2,6 +2,8 @@
 Beyond spellchecking - what else can we check automatically?
 ============================================================
 
+**NOTE** "Danger, Will Robinson!" - *This is still in early preparation. This is not yet a talk.* **ENOT**
+
 This is (will be) a talk for presentation at `Write the Docs Prague 2022`_,
 11th - 13th September 2022.
 
