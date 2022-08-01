@@ -145,8 +145,6 @@ out the limits of "simple checks" and "great benefit".
 
 * Original markup - looking at the raw markup
 
-    --------
-
     We work in reStructuredText and in markdown. If one switches back and forth,
     it's very easy to use the wrong notation. So useful rules might be:
 
@@ -168,8 +166,6 @@ out the limits of "simple checks" and "great benefit".
 
       Regardless, the *solution* probably needs a rule that looks at the raw
       markup (which I hope is reStructuredText and not HTML!)
-
-    --------
 
   * Catch use of markdown style links::
 
@@ -434,6 +430,8 @@ As to checking with markup - https://github.com/languagetool-org/languagetool/is
 (closed in 2018) suggests it's not something they see as their business to do,
 nor do they have the resources. The best suggestion looks to be "convert to
 plain text and check that". But see LTeX_ below...
+
+.. _LTeX:
 
 LanguageTool and LTeX - providing a command line interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
