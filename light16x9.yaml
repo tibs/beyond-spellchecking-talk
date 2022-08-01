@@ -33,7 +33,8 @@ styles:
         hyphenation: false
         spaceAfter: 10
 
-    ## I want this to be the title on the first slide, but not the subtitle on other slides
+    # Use a bit less space after the title, so it's not so far from the following info
+    # This may be more important for this slide deck as the title is so long
     title:
       alignment: TA_CENTER
       fontSize: 200%
@@ -41,24 +42,9 @@ styles:
       parent: heading
       spaceAfter: 20
 
-    ## I *could* use this as a class if I had to
-    #title-slide-title:
-    #  alignment: TA_CENTER
-    #  fontSize: 200%
-    #  keepWithNext: false
-    #  parent: heading
-    #  spaceAfter: 20
-
     title-slide-info:
         parent: normal
         alignment: TA_CENTER
-
-    # Let's play with this
-    subtitle:
-        #fontSize: 75%
-        fontSize: 20%
-        parent: title
-        spaceBefore: 12
 
     literal:
         textColor: "#000000"

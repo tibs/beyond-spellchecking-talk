@@ -28,6 +28,8 @@ Beyond spellchecking - What else can we check automatically
 
    *tony.ibbs@aiven.io* / *@much_of_a*
 
+   .. Add a bit of space at the bottom of the footer, to stop the underlines
+      running into the bottom of the slide
    .. raw:: pdf
 
       Spacer 0 5
