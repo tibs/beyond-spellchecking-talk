@@ -8,13 +8,8 @@ Talk to be given at WtD Prague 2022
 
 .. contents::
 
-Proposal
-========
-
 Abstract
---------
-
-(= 178 words)
+========
 
 Writing documentation is hard, and spotting errors in that documentation is
 harder. Luckily, if we're working in a docs-as-code environment, we can apply
@@ -35,10 +30,11 @@ At the end I'll demonstrate how to implement some of these techniques, using
 the example of Aiven's open source developer documentation. I'll make sure to
 include my favourite check, for the correct usage of `®` on product names.
 
+From the proposal
+=================
+
 Who and Why
 -----------
-
-(= 239 words)
 
 As a software developer until the end of 2021, I've been used to both
 automated checking of source code (linting) and also code review. Both are
@@ -69,8 +65,6 @@ our github review process.
 Other Information
 -----------------
 
-(= 134 words)
-
 I've been a software developer since the 1980s, and some form of documentarian
 almost as long (albeit without the use of the term). I used to recommend TeX,
 but have been enthusing about reStructuredText since it was created. I gave a
@@ -84,91 +78,20 @@ appropriate use of `®` marks, as it turned out that there was a bug in the
 relevant part of vale, now fixed after my first PR to the project.
 
 
-Write the Docs Writing Day
-==========================
-
-The first proper day of WtD Prague is normally a "Writing" day, where people
-can collaborate on tasks, or work on individual tasks (in company).
-
-It's probably a good idea to try to have a vale or lint-the-docs "table" at
-the writing day, and work on some rules, or perhaps even some of the vale
-issues I want to work on. ("Having a table" just means suggesting it on the
-day.)
-
-
-Early Notes
-===========
-
-Why this is a good thing to do, and lots of examples of how doing simple
-things can give good results.
-
-Use our own vale setup as examples where appropriate, but **don't** turn this
-into a vale advocacy piece.
-
-Usefulness of being able to run in CI as well as at the command line.
-
-Try to give a "hierarchy" of complexity, including:
-
-* spell checking
-* suggested replacements
-* "if this then that" rules
-* restrictions to certain parts of a document
-* simple NLP
-* looking at the raw markup
-
-(use vale for inspiration here, but try and find other tools and consider what
-they can do)
-
-Consider:
-
-* checking the markup directly
-* checking a derivative of the markup (e.g., HTML produced from it) - this
-  allows handling more formats at cost of being removed from the original
-* marking parts of the text as "do not check" - is this a good idea, a
-  sometimes good idea, a useful compromise, or just awful?
-* defining and using "styles" - allowing one to share what is checked
-
-We work in reStructuredText and in markdown. If one switches back and forth,
-it's very easy to use the wrong notation. So useful rules might be:
-
-* using the wrong sort of inline link text - ``[text](link)`` in reST, for instance
-* using the wrong number of backticks for literal text - reStructuredText wants them paired
-  (and uses single backticks for more specialised purposes)
-* markdown doesn't support list items with alphabetic "numbering" (``a.``),
-  but reStructuredText does
-
-Maybe something on limitations, as well:
-
-* Linting ``someone@place.io`` and:
-
-  * vale uses ``rst2html.py`` to produce what it lints
-  * sphinx produces different HTML from the same reStructuredText source
-
-  So debugging why ``support@aiven.io`` complains that ``aiven`` should be ``Aiven``
-  isn't quite as simple as it might be.
-
-  Regardless, the *solution* probably needs a rule that looks at the raw
-  markup (which I hope is reStructuredText and not HTML!)
-
--------
-
-``lint`` was the name of a program written in 1978 to find common errors and
-stylistic problems in C code, and it is indeed named in analogy with pulling
-bits of fluff off fabric. Classically, linting programs don't actually
-*understand* the programming language they're analysing - they use a set of
-heuristics and rules to recognise common patterns that are likely to be mistakes.
-That same approach can be applied to our documentation, and it can be
-surprisingly powerful.
-
--------
-
-Specific notes
-==============
+Notes
+=====
 
 Quick (very quick) history of the term linting
 
-Benefits of simple checks, that can be fast, and give good result
+  ``lint`` was the name of a program written in 1978 to find common errors and
+  stylistic problems in C code, and it is indeed named in analogy with pulling
+  bits of fluff off fabric. Classically, linting programs don't actually
+  *understand* the programming language they're analysing - they use a set of
+  heuristics and rules to recognise common patterns that are likely to be mistakes.
+  That same approach can be applied to our documentation, and it can be
+  surprisingly powerful.
 
+Benefits of simple checks, that can be fast, and give good result
 
 Text is *not* code - code has rigorous restrictions that do not apply
 to text. However, that doesn't mean that we can't take the idea of
@@ -208,6 +131,7 @@ out the limits of "simple checks" and "great benefit".
 
 * Document structure
 
+  * Restricting checks to certain parts of a document
   * Only perform this check on *headings*
 
 * NLP - allow limiting checks to particular parts of speech, etc.
@@ -219,7 +143,33 @@ out the limits of "simple checks" and "great benefit".
 
   * Counting word length distribution, sentence length distribution, etc.
 
-* Original markup
+* Original markup - looking at the raw markup
+
+    --------
+
+    We work in reStructuredText and in markdown. If one switches back and forth,
+    it's very easy to use the wrong notation. So useful rules might be:
+
+    * using the wrong sort of inline link text - ``[text](link)`` in reST, for instance
+    * using the wrong number of backticks for literal text - reStructuredText wants them paired
+      (and uses single backticks for more specialised purposes)
+    * markdown doesn't support list items with alphabetic "numbering" (``a.``),
+      but reStructuredText does
+
+    Maybe something on limitations, as well:
+
+    * Linting ``someone@place.io`` and:
+
+      * vale uses ``rst2html.py`` to produce what it lints
+      * sphinx produces different HTML from the same reStructuredText source
+
+      So debugging why ``support@aiven.io`` complains that ``aiven`` should be ``Aiven``
+      isn't quite as simple as it might be.
+
+      Regardless, the *solution* probably needs a rule that looks at the raw
+      markup (which I hope is reStructuredText and not HTML!)
+
+    --------
 
   * Catch use of markdown style links::
 
@@ -250,16 +200,23 @@ out the limits of "simple checks" and "great benefit".
 
   That's a bit harder if we're using a *framework* to define new tests.
 
+  So, marking parts of the text as "do not check" - is this a good idea, a
+  sometimes good idea, a useful compromise, or just awful?
+
 * Problems / implementation difficulties
 
   * How to deal with All the markups
 
     * Render into HTML and check that
-    * Problem examplar:
+    * This isn't always able to be perfect:
+
       reStructuredText -> HTML with ``rst2html`` (standalone), ``docutils``
       (more hands on), but the problem is that Sphinx has extra roles and
       directives, which rst2html/docutils doesn't recognise, and one can't
       run Sphinx on just selected files
+
+    * Does one allow looking at the raw markup (reST) *and* the HTML (which
+      is also in some sense "raw" markup if it is what is being checked)
 
 * vale is a framework that comes with some predefined checks, and the
   ability to load packages of existing checks, but also allows you to
@@ -478,8 +435,8 @@ As to checking with markup - https://github.com/languagetool-org/languagetool/is
 nor do they have the resources. The best suggestion looks to be "convert to
 plain text and check that". But see LTeX_ below...
 
-LTeX
-~~~~
+LanguageTool and LTeX - providing a command line interface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 https://valentjn.github.io/ltex/ - Grammar/Spell Checker Using LanguageTool
 with Support for LATEX, Markdown, and Others
@@ -544,3 +501,16 @@ Possibly useful links
 
 .. _LanguageTool: https://languagetool.org/
 .. _`run using a local server`: https://dev.languagetool.org/http-server
+
+-----------
+
+Appendix: Write the Docs Writing Day
+====================================
+
+The first proper day of WtD Prague is normally a "Writing" day, where people
+can collaborate on tasks, or work on individual tasks (in company).
+
+It's probably a good idea to try to have a vale or lint-the-docs "table" at
+the writing day, and work on some rules, or perhaps even some of the vale
+issues I want to work on. ("Having a table" just means suggesting it on the
+day.)
