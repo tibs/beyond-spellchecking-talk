@@ -30,6 +30,64 @@ At the end I'll demonstrate how to implement some of these techniques, using
 the example of Aiven's open source developer documentation. I'll make sure to
 include my favourite check, for the correct usage of `®` on product names.
 
+Outline
+=======
+
+*(To be gradually filled in)*
+
+Introduction and history
+------------------------
+
+
+Types of check
+--------------
+
+*"What we might check"*
+
+
+
+Pre-built or hand-designed
+--------------------------
+
+*"How to get started"*
+
+* Adopt pre-packaged styles - for instance, Microsoft or Google styles, or
+  accessibility styles like Alex
+
+
+Tools
+-----
+
+Not attempting a complete overview of the field
+
+See the `For reference: particular tools`_ section for links and notes
+that may be useful here.
+
+Only really interested in things that have a CLI (command line interface) so
+we can run them at the terminal, and from CI (continuous integration).
+
+For each:
+
+1. does it come with built-in checks,
+2. does it come with loadable checks ("packages"),
+3. can one write new rules,
+4. and if so how (templating and/or using a programming language)
+
+* alex
+* vale
+* textlint
+* proselint
+* redpen
+* LanguageTool and LTeX
+
+
+Use in Aiven's developer documentation
+--------------------------------------
+
+...
+
+--------------
+
 From the proposal
 =================
 
@@ -77,6 +135,8 @@ developer documentation. A particular challenge was writing the rules for
 appropriate use of `®` marks, as it turned out that there was a bug in the
 relevant part of vale, now fixed after my first PR to the project.
 
+
+--------------
 
 Notes
 =====
@@ -278,6 +338,9 @@ on whether new checks are written via plugins using a programming language,
 or whether there's some "higher level" abstraction (also) available. This
 is I think a good thing about Vale.
 
+
+--------------
+
 For reference: particular tools
 ===============================
 
@@ -451,6 +514,54 @@ I think this looks like a viable way to use LanguageTool with markup.
 
 Perhaps it compares with the vale server, in some ways, as well.
 
+Some notes on alexjs
+--------------------
+
+alexjs_ is a linter for markdown, which aims to catch "insensitive, inconsiderate
+writing". The source is at https://github.com/get-alex/alex. It can be run from
+the command line.
+
+The rules it follows are listed at retext-equality_ and retext-profanities_.
+
+Note, that last document necessarily contains offensive terms.
+It also has some which may not be, like ``breast`` and ``european``, because it's
+trying to warn about *possible* problems - the `retext-profanities README`_ makes
+this clearer:
+
+  When should I use this?
+
+  You can opt-into this plugin when you’re dealing with your own text
+  and want to check for potential mistakes.
+
+One might reference the `Scunthorpe problem`_ and the problem of identifying
+offensive words without (sufficient) context.
+
+The documentation at https://github.com/get-alex/alex does explain how
+to disable specific checks for particular cases - having to do this is probably
+inevitable with this sort of tool.
+
+Interestingly, the "profanity" check has 3 levels, according to how likely
+the offending word is to be a profanity.
+
+Note: the command line tool can be run on markdown, MDX and HTML (ignoring
+the markup syntax) as well as on plain text.
+
+For use in CI, they recommend using the ``--diff`` option, which will
+only report on lines that are changed in a push.
+
+Finally, there are some nice links at the end of the readme at https://github.com/get-alex/alex
+
+The article https://dev.to/meeshkan/setting-up-the-alex-js-language-linter-in-your-project-3bpl
+talks one throuh getting alex up and running.
+
+.. _retext-equality: https://github.com/retextjs/retext-equality/blob/main/rules.md
+.. _retext-profanities: https://github.com/retextjs/retext-profanities/blob/main/rules.md
+.. _`retext-profanities README`: https://github.com/retextjs/retext-profanities/blob/main/readme.md
+.. _`Scunthorpe problem`: https://en.wikipedia.org/wiki/Scunthorpe_problem
+
+
+There is a vale plugin for similar checks
+
 Other alternatives to vale
 --------------------------
 
@@ -462,7 +573,7 @@ its competitors.
 See also https://lwn.net/Articles/822969/ (Tools to improve Englist text) from 2020.
 
 * https://textlint.github.io/ - Rules are written as plugins using JavaScript.
-* https://alexjs.com/ - "Catch insensitive, inconsiderat writing". There is a vale
+* https://alexjs.com/ - "Catch insensitive, inconsiderate writing". There is a vale
   plugin for at least some of the same functionality
 * http://proselint.com/ and https://github.com/amperser/proselint - Rules are written
   as plugins using Python
@@ -471,6 +582,24 @@ See also https://lwn.net/Articles/822969/ (Tools to improve Englist text) from 2
   https://github.com/redpen-cc/redpen/ - Looks as if custom validators can be
   added as plugins in Java or JavaScript
 
+
+
+Somewhat related - accessibility checking
+-----------------------------------------
+
+There's a much bigger world of checking things beyond the text itself, including
+colour usage, layout, and so on. It clearly overlaps with what we're interested
+in here, but is beyond the scope of this article.
+
+For instance, https://www.accessguide.io/ aims to give a friendly and useful guide
+to the WCAG 2.1 (Web Content Accessibility Guidelines).
+
+And we already mentioned alexjs_
+
+.. _alexjs: https://alexjs.com/
+
+
+--------------
 
 Possibly useful links
 =====================
@@ -500,7 +629,8 @@ Possibly useful links
 .. _LanguageTool: https://languagetool.org/
 .. _`run using a local server`: https://dev.languagetool.org/http-server
 
------------
+
+--------------
 
 Appendix: Write the Docs Writing Day
 ====================================
