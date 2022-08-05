@@ -44,7 +44,300 @@ Types of check
 
 *"What we might check"*
 
+.. note:: Does the structure "thing we check, explanation/example, moral (what
+          we learn from how applicable/useful/difficult this is)" scale? It
+          has some nice resonance to it, but isn't worth straining to fit.
 
+Spelling
+~~~~~~~~
+
+(vale: ``spelling``)
+
+  Looks up words in one or more Hunspell-compatible dictionaries. Supports filters
+  and a file of words to ignore.
+
+  "'Arglebargle' does not seem to be a word"
+
+  *We use this*
+
+  Note: uses the dictionary as a word list, but doesn't support all Hunspell
+  capabilities. For instance, it doesn't support ``KEEPCASE`` (and ``/K``).
+
+*Notes from the other night:*
+
+Spelling checkers look up "words" from the document in a "dictionary" and report
+any that are not recognised.
+
+.. note:: We're not interested here in how the dictionary is constructed, for all
+          we care it could actually just be a long list of all correct words.
+
+The checking process probably (if it's going to be useful) ignores some things,
+like sequences of numbers, and most punctuation (the possible exception of
+possessives / apostrophes?)
+
+An important principle we can already see here is that checking for spelling
+can only report *mistakes*, things that are wrong. And worse, it's actually
+*possible* mistakes, things which *might* be wrong. Which in this case means
+words that are not in the dictionary, which means I'll have problems with
+the text ``There is no such word as "glurble"`` (and of course I'll have
+worse problems if that's not true!).
+
+This is a general principle that applies to all linting - the linting program
+does not understand the text, it is just applying rules to look for what might
+be mistakes.
+
+.. note:: There is a secondary assumption that any checker that could understand
+          the text would either be approximate at best (machine learning?) and
+          almost certainly too expensive to run locally - see caveats about
+          software that talks to the cloud later on.
+
+*More notes from late at night:*
+
+Spell checking is a big subject! We're definitely not going to address much of
+that here.
+
+Capitalisation and spell checking: In english we use capitalise a word at the
+start of a sentence, even if it would otherwise be lower case (although, to be
+awkward, consider things like ``iPhone``). So either a spell checker (and its
+dictionary) has to have a way to encode that, or it needs to do something
+like "the dictionary word ``tony`` (all lower case) matches ``tony`` and ``Tony``, and
+the dictionary word ``Tony`` just matches ``Tony``, not ``tony``". What one
+does for capitalisation inside a word is definitely beyond the scope of this
+text.
+
+People, product and company names: Traditional dictionaries will have some
+proper names in them. What does one do about people's names (should ``Tibs``
+be in the dictionary?), product names (we would clearly want ``PostgreSQL`` in
+there) and business names (we definitely think that ``Aiven`` is a correct
+spelling). It's normal for spelling checkers to allow additional dictionaries,
+but should one seperate these from "ordinary" words?
+
+Ignored words: It can be useful to have a list of words that are techincally
+not correct but will be ignored (for the purposes of spell checking). It can
+be especially useful if these can also be *phrases*. (Can I actually come up
+with a good example of this other than ``aiven`` because of the problem we
+have with checking ``mailto:`` items using Vale?)
+
+
+
+.. note:: The following subsections riff off what vale provides, at least
+          initially. I shall need to change the order, and I'll quite likely
+          not put all of these into the slides...
+
+Aside: word versus token versus ...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+What is the unit of what we are checking?
+
+It's not as simple as words, because sometimes we want to test for a phrase.
+
+And even words aren't simple - they can include spaces (well, one can argue
+that) and definitely some other sorts of punctuation (``see-saw``, ``can't``).
+
+The term often used in programming, when parsing texts, is token, and that's
+not a bad name.
+
+But often one also wants a *pattern* - something that describes the thing to
+be matched. Typical patterns incude regular expressions (there's a lot to
+these, and they can get very complicated, but as a simple example, ``Tib+s``
+matches ``Ti`` followed by one or more ``b`` followed by ``s``, so ``Tibs``,
+``Tibbs``, ``Tibbbs`` and so on) and "globbing expressions", where the only
+"wildcards" are that ``?`` matches any single character and ``*`` matches any
+zero or more characters.
+
+Repetition
+~~~~~~~~~~
+
+(vale: ``repetition``)
+
+   Looks for repetition of its tokens.
+
+   "'the' is repeated"
+
+We are probably all familiar with the example of:
+
+  What is wrong with this text::
+
+    The cat
+    and the
+    the dog
+
+where it is surprisingly hard to spot the repeated ``the``.
+
+So it's natural to consider having a test to spot such repetitions.
+Unfortunately, it can't be a blanket check for *any* repeated words, because
+there are legitimate phrases that repeat words (``knock knock``, ``there
+there``)
+
+That means that the rule needs to specify which words to check for.
+
+The question is, how often do you actually see this done in real documents,
+and thus is it worth actually adding a test for it?
+
+Don't say that
+~~~~~~~~~~~~~~
+
+(vale: ``existence``)
+
+  Look to see if particular tokens exist. Supports exceptions.
+
+  "Consider not using 'bad phrase'"
+
+Examples might include complaining about use of the words ``simply`` and
+``obviously``, and the phrase ``it is obvious``.
+
+Use *this* instead of *that*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(vale: ``substitution``)
+
+  Looks for token A and suggests token B instead. Supports exceptions.
+
+  "Consider using 'B' instead of 'A'"
+
+  *We use this*
+
+A simple example might be ``adn`` -> ``and``
+
+Slightly more complex, we use the (product name) ``Flink``, and know (we've
+seen this happen) that people sometimes type ``flick`` instead. We don't
+expect to ever need to use that word in our documentation, so it's reasonable
+to have a rule suggesting ``flick`` -> ``flink``.
+
+At a previous employer, where many of the staff were in Japan, I was told that
+abbreviations like ``i.e.`` and ``e.g.`` are not necessarily well recognised
+by Japanese developers. So it could be useful to have rules for ``e.g.`` ->
+``for example`` and ``i.e.`` -> ``that is``.
+
+A little more complex: when referring to the services we provide, we must be
+careful not to imply ownership of the products/projects ((*what's the correct
+term I want here?*)). So we have rules like ``Aiven PostgreSQL`` -> ``Aiven
+for PostgreSQL``.
+
+Aside: Create tests you need, retire them when they're not
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If we're creating our own checks, only create ones that actually
+help, and consider reviewing them periodically to check if that is still true.
+If the person who always mistypes ``adn`` leaves the team, then we probably
+don't still need the error message telling us that ``"adn" should be replaced by "and"``.
+
+Aside: Why auto-correction is not (generally) a (good) thing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Corollary of only being able to spot (things that might be) errors: we can't
+do automated correction of text, because we'd have too many false positives.
+(This might not actually be true in certrain well constrained cases, like the
+``adn`` case, but is still probably not worth doing - that particular problem
+is better addressed in the text editor.)
+
+Too many / too few
+~~~~~~~~~~~~~~~~~~
+
+(vale: ``occurrence``)
+
+   Enforces minimum or maximum times a token appears. Supports scope
+   - e.g., ``sentence``
+
+   "More than 3 commas in sentence"
+
+One or the other, not both
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(vale: ``consistency``)
+
+   Ensures key and value do not occur in the same scope.
+
+   "Inconsistent spelling of 'center'"
+
+If *this* is present, then *that* must also be present
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(vale: ``conditional``)
+
+  Ensures that if token A is present, then so it token B. Supports exceptions, scope.
+
+  Terminology on this one is a bit confusing.
+
+  "WHO has no definition"
+
+  "At least one 'PostgreSQL' must be marked as ®"
+
+  *We use this*
+
+The example that Vale uses is a rule that says that if a word occurs that is 3
+or more capital letters (for instance, ``WHO``) then there must also be an
+occurrence of an explanation of that term (so in this case, it would be ``WHO
+(...)`` where ``...`` is allowed to be arbitrary text).
+
+To clarify: it's possible to do a rule specifically saying "if ``WHO`` occurs
+then ``WHO (<some text)`` must also occur", but it's also possible to make a
+rule saying "if ``word of 3 or more A-Z`` occurs, then ``that same word (<some
+text>)`` must also occur".
+
+We use this for the `®` checks ((*either explain here or late...*))
+
+Capitalisation
+~~~~~~~~~~~~~~
+
+(vale: ``capitalization``)
+
+  Checks that the text in the specified scope is capitalized according to the chosen scheme.
+  Supports exceptions, scope.
+
+  "'Badly Capitalised Heading' should be in sentence case"
+
+  *We use this*
+
+  Note: The capitalization metrics are *not* necessarily as simple as one might expect.
+  For instance, ``$sentence`` isn't just "first word must start with a capital, rest
+  must not". This is a Good Thing in practice, if harder to explain.
+
+While this is very useful, it's hard to think of how to make it well
+specified, easy to understand, and doing what one wants. There are some
+external rules on this sort of thing, which can be adopted.
+
+Problems: consider ``iPhone prices``, ``The importance of NASA``,
+``Remembering Terry Jones``.
+
+Arbitrary metrics
+~~~~~~~~~~~~~~~~~
+
+(vale: ``metric``)
+
+  Calculates one of various arbitrary metrics and reports if it is exceeded.
+
+  "Try to keep the Flesch-Kincaid grade level (%s) below 8"
+
+May mean hardcoded support for named metrics, or may mean a general mechanism
+for doing arithemetic on the number of tokens according to their type, scope,
+etc.
+
+NLP sentence forms
+~~~~~~~~~~~~~~~~~~
+
+.. note:: There must be a better subtitle for that!
+
+(vale: ``sequence``)
+
+  Allows rules that specify a sequence of NLP tokens that may or may not form
+  (be part of?) a sentence.
+
+Arbitrary script / plugin
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(vale: ``script``)
+
+  Write a rule using arbitrary Go code (well, a Go-like scripting language)
+
+This is, in fact, a sufficient if rather minimal mechanism for doing
+everything, and the plugin approach (here are some pre-prepared plugins, and
+otherwise write your own) is thus quite common.
+
+The Vale approach of "here is a set of templates for rules at a high level"
+is rarer, probably because it's harder to come up with the set of templates
+(both in what that set should be, and also in working out they should be
+formed, what the user has to enter to use them).
 
 Pre-built or hand-designed
 --------------------------
@@ -53,6 +346,53 @@ Pre-built or hand-designed
 
 * Adopt pre-packaged styles - for instance, Microsoft or Google styles, or
   accessibility styles like Alex
+
+What it checks
+--------------
+
+.. note:: This is an important point, but quite likely beyond the scope of the
+          slides, and possibly beyond the scope of this whole document - it's
+          certainly not something to dwell on.
+
+There are a lot of tools that will check plain text, and this includes a
+variety that run in the cloud.
+
+To use those, you'd first need to remove all the markup, which I assume will
+make it harder to match error reports to line numbers in the original.
+
+There are some tools that understand particular markup languages - typically
+markdown or HTML. Some also cope with reStructuredText, AsciiDoc or XML.
+
+Some tools *directly* understand some markups (for instance markdown and
+HTML), but need to run a subsidiary tool or process to convert other markups
+into (typically) HTML, so that they can lint that. For most purposes, this
+will work well enough - there should only be a few occasions when details of
+the actual raw markup are relevant to checks (checking for things like
+"header" and so on are a different matter, and will typically still work).
+
+If the program allows hand-written plugins (in Go, Python or whatever) then
+these may have access to the original file, and that then allows the plugin to
+do whatever it may need to do.
+
+Plumbing in to CI
+-----------------
+
+CI (Continuous Integration) - specifically thinking of checking a github PR or equivalent
+
+This essentially add the following requirements (or at least desirables):
+
+* runs as a command line tool
+* has a provided workflow or is easy to run in on
+* configuration can be stored in the repository being checked, or specified on
+  the command line
+* preferably runs *fast*, and/or can run only on the subset of documents that
+  have been changed.
+* mustn't add artefacts to the (filesystem), or if it does they should be
+  ignored by git or whatever (this *might* be logs) - I think this is somewhat
+  undesirable anyway
+* doesn't need to talk to the cloud
+
+What have I forgotten?
 
 
 Tools
@@ -74,7 +414,7 @@ For each:
 4. and if so how (templating and/or using a programming language)
 
 * alex
-* vale
+* Vale
 * textlint
 * proselint
 * redpen
@@ -84,7 +424,91 @@ For each:
 Use in Aiven's developer documentation
 --------------------------------------
 
+We use Vale
+~~~~~~~~~~~
+
 ...
+
+The checks we use
+~~~~~~~~~~~~~~~~~
+
+``devportal/.vale.ini`` ::
+
+  # For more information, see ``.github/vale/README.rst``
+  #
+  # vale-action (https://github.com/errata-ai/vale-action) recommends
+  # keeping the vale styles in the `.github` directory.
+  # Since we have a README, styles, a dictionary, and some tests, we are
+  # keeping related directories files in `.github/vale`
+
+  StylesPath = ".github/vale/styles"
+
+  # We do not want to check the content of the following HTML tags
+  # The defaults are script, style, pre, figure
+  SkippedScopes = script, style, pre, figure
+
+  [*.rst]
+  BasedOnStyles = Aiven
+
+and::
+
+  $ ls devportal/.github/vale/styles/Aiven/ -w 50
+  aiven_spelling.yml
+  capitalization_headings.yml
+  common_replacements.yml
+  first_PostgreSQL_is_registered.yml
+
+and a variety of other ``first_<thing>_is_registered.yml`` rules.
+
+Use at the command line
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: bash
+
+  $ make spell
+
+Use in CI
+~~~~~~~~~
+
+We use the provided `vale-action`_, the official GitHub action for Vale.
+
+.. _`vale-action`: https://github.com/errata-ai/vale-action
+
+``devportal/.github/workflows/lint.yaml``
+
+.. code:: yaml
+
+
+  name: Linting
+  on:
+    push:
+      branches:
+        - master
+      tags:
+        - '**'
+    pull_request:
+
+  jobs:
+    prose:
+      runs-on: ubuntu-latest
+      continue-on-error: false
+      steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Vale
+        # We want support for at least vale v2.15.3
+        # The current release of vale-action, v1.5.0, only provides vale 2.15.2
+        # So for the moment we need to use vale-action master, which provides
+        # at least vale 2.15.5.
+        # When there is a vale-action that provides a version we can use, re-pin
+        # this to a specific version of vale-action.
+        uses: errata-ai/vale-action@master
+        with:
+          files: '["index.rst", "docs"]'
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
 
 --------------
 
@@ -114,7 +538,7 @@ I shall definitely be pointing out that it's not necessarily a requirement to
 write your own rule sets - that there are typically pre-bundled sets of rules
 one can adopt, and for different purposes.
 
-While we use vale as our text linting tool, the talk is not about vale, but
+While we use Vale as our text linting tool, the talk is not about Vale, but
 about the general techniques of linting documentation, and the types of check
 that one might make. Vale will only be relevant torwards the end, when talking
 about how we use these techniques in our own environment, and specifically in
@@ -130,10 +554,10 @@ talk on the history of markup languages at WtD Prague 2018.
 
 Since the start of 2022 I've been a Developer Educator at Aiven
 (https://aiven.io), and one of my first tasks was to learn about and extend
-our use of vale (https://vale.sh) which we use for linting our open source
+our use of Vale (https://vale.sh) which we use for linting our open source
 developer documentation. A particular challenge was writing the rules for
 appropriate use of `®` marks, as it turned out that there was a bug in the
-relevant part of vale, now fixed after my first PR to the project.
+relevant part of Vale, now fixed after my first PR to the project.
 
 
 --------------
@@ -218,7 +642,7 @@ out the limits of "simple checks" and "great benefit".
 
     * Linting ``someone@place.io`` and:
 
-      * vale uses ``rst2html.py`` to produce what it lints
+      * Vale uses ``rst2html.py`` to produce what it lints
       * sphinx produces different HTML from the same reStructuredText source
 
       So debugging why ``support@aiven.io`` complains that ``aiven`` should be ``Aiven``
@@ -274,7 +698,7 @@ out the limits of "simple checks" and "great benefit".
     * Does one allow looking at the raw markup (reST) *and* the HTML (which
       is also in some sense "raw" markup if it is what is being checked)
 
-* vale is a framework that comes with some predefined checks, and the
+* Vale is a framework that comes with some predefined checks, and the
   ability to load packages of existing checks, but also allows you to
   define your own (and maybe release them as a package). So you get
   all the power of that approach, and also the need to mend it yourself
@@ -344,7 +768,7 @@ is I think a good thing about Vale.
 For reference: particular tools
 ===============================
 
-What vale provides
+What Vale provides
 ------------------
 
 In the following, "token" means a word, phrase or regular expression.
@@ -512,7 +936,7 @@ Emacs, Vim, VS Code.
 
 I think this looks like a viable way to use LanguageTool with markup.
 
-Perhaps it compares with the vale server, in some ways, as well.
+Perhaps it compares with the Vale server, in some ways, as well.
 
 Some notes on alexjs
 --------------------
@@ -560,20 +984,20 @@ talks one throuh getting alex up and running.
 .. _`Scunthorpe problem`: https://en.wikipedia.org/wiki/Scunthorpe_problem
 
 
-There is a vale plugin for similar checks
+There is a Vale plugin for similar checks
 
-Other alternatives to vale
+Other alternatives to Vale
 --------------------------
 
-The vale documentation mentions ``textlint`` and ``RedPen`` as alternatives
+The Vale documentation mentions ``textlint`` and ``RedPen`` as alternatives
 that handle markdown and reStructuredText (and other things), and ``alex``
-as just handling markdown. It also benchmarks vale as being faster than
+as just handling markdown. It also benchmarks Vale as being faster than
 its competitors.
 
 See also https://lwn.net/Articles/822969/ (Tools to improve Englist text) from 2020.
 
 * https://textlint.github.io/ - Rules are written as plugins using JavaScript.
-* https://alexjs.com/ - "Catch insensitive, inconsiderate writing". There is a vale
+* https://alexjs.com/ - "Catch insensitive, inconsiderate writing". There is a Vale
   plugin for at least some of the same functionality
 * http://proselint.com/ and https://github.com/amperser/proselint - Rules are written
   as plugins using Python
@@ -638,7 +1062,7 @@ Appendix: Write the Docs Writing Day
 The first proper day of WtD Prague is normally a "Writing" day, where people
 can collaborate on tasks, or work on individual tasks (in company).
 
-It's probably a good idea to try to have a vale or lint-the-docs "table" at
-the writing day, and work on some rules, or perhaps even some of the vale
+It's probably a good idea to try to have a Vale or lint-the-docs "table" at
+the writing day, and work on some rules, or perhaps even some of the Vale
 issues I want to work on. ("Having a table" just means suggesting it on the
 day.)
