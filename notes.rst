@@ -35,8 +35,59 @@ Outline
 
 *(To be gradually filled in)*
 
-Introduction and history
-------------------------
+Introduction
+------------
+
+.. note:: This started out as the "Who and Why" section of the proposal.
+          Some of it can be re-used as the "Introduction", but it needs a good
+          pruning!
+
+As a software developer until the end of 2021, I've been used to both
+automated checking of source code (linting) and also code review. Both are
+valuable in different ways, neither is a substitute for the other.
+
+I'm sure that all documentarians understand the value of having another
+person read over their text and make comments. I want to show that there is
+value in automatic checking as well, beyond spell checking and "grammar
+checking".
+
+The thing that programmers learnt was that surprisingly simple rules can give
+useful results. I'll look at a sequence of such relatively simple rules that
+are applicable to text, and how they can be used to detect common problems.
+
+By the end, at least one of my example use cases should cause each audience
+member to go "Aha! that sounds useful".
+
+I shall definitely be pointing out that it's not necessarily a requirement to
+write your own rule sets - that there are typically pre-bundled sets of rules
+one can adopt, and for different purposes.
+
+While we use Vale as our text linting tool, the talk is not about Vale, but
+about the general techniques of linting documentation, and the types of check
+that one might make. Vale will only be relevant torwards the end, when talking
+about how we use these techniques in our own environment, and specifically in
+our github review process.
+
+History of linting
+------------------
+
+Quick (very quick) history of the term linting
+
+  ``lint`` was the name of a program written in 1978 to find common errors and
+  stylistic problems in C code, and it is indeed named in analogy with pulling
+  bits of fluff off fabric. Classically, linting programs don't actually
+  *understand* the programming language they're analysing - they use a set of
+  heuristics and rules to recognise common patterns that are likely to be mistakes.
+  That same approach can be applied to our documentation, and it can be
+  surprisingly powerful.
+
+So we're after simple checks, that can be fast, and give good results.
+
+Text is *not* code - code has rigorous restrictions that do not apply
+to text. However, that doesn't mean that we can't take the idea of
+"simple checks applied to great benefit" - the trick is in working
+out the limits of "simple checks" and "great benefit".
+
 
 
 Types of check
@@ -47,6 +98,14 @@ Types of check
 .. note:: Does the structure "thing we check, explanation/example, moral (what
           we learn from how applicable/useful/difficult this is)" scale? It
           has some nice resonance to it, but isn't worth straining to fit.
+
+.. note:: I believe I want to start with "Spelling", but what order do I then
+          want?
+
+          Also, what have I missed (because I started with that Vale
+          provides), and what should I actually not include (if it is
+          too specialiseed - I don't think this is an issue for the notes, but
+          quite likely is for the slides).
 
 Spelling
 ~~~~~~~~
@@ -197,7 +256,10 @@ Use *this* instead of *that*
 
   *We use this*
 
-A simple example might be ``adn`` -> ``and``
+A simple examples might be ``adn`` -> ``and`` (that's a relatively common
+typo) or ``supercede`` -> ``supersede`` (a mistake I know I often make). These
+are basically N-distance fuzziness or ``slop`` changes, and are often provided
+as part of indepdenent spellcheckers.
 
 Slightly more complex, we use the (product name) ``Flink``, and know (we've
 seen this happen) that people sometimes type ``flick`` instead. We don't
@@ -275,7 +337,37 @@ then ``WHO (<some text)`` must also occur", but it's also possible to make a
 rule saying "if ``word of 3 or more A-Z`` occurs, then ``that same word (<some
 text>)`` must also occur".
 
+Bonus points if the rule can say:
+
+* there must be just one occurrence of the "explanation"
+* the explanation must come first (or last, or don't care - ideally one would
+  have the ability to specify all three possibilities)
+* the occurrence of *that* (e.g., the explanation) must occur in a particular
+  *scope* - for instance, in body text, in a heading, in a footnote.
+
 We use this for the `®` checks ((*either explain here or late...*))
+
+Aside: scope
+~~~~~~~~~~~~
+
+The ability to take account of where in the document structure a check is applied.
+
+For instance: only in *headings* or *footnotes*.
+
+In the context of our ® check, we actually would like to say:
+
+* ``Thing`` must be used with ® in the first *title* to use the name
+* ``Thing`` must be used with ® in the first non-title to use the name
+* first use of ``Thing`` *must* be with ®, regardless
+
+We may also want to be able to say that if ``Thing®`` occurs, then **after
+that** in the document there must be the text "``Thing® is a registered
+tradmark of Thing industries.``"
+
+(For our Aiven documentation we generally don't want that, as we gather the
+acknowledgement texts into a common footer, but even so we may have occasional
+terms that aren't acknowledged in that common footer, and then we would want
+to be able to say this per-section.)
 
 Capitalisation
 ~~~~~~~~~~~~~~
@@ -300,6 +392,55 @@ external rules on this sort of thing, which can be adopted.
 Problems: consider ``iPhone prices``, ``The importance of NASA``,
 ``Remembering Terry Jones``.
 
+Aside: Looking at the raw text
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It can sometimes be useful to make a rule apply the original raw text, so that
+the markup can also be inspected.
+
+This is not *necessarily* a separate type of rule - in the Vale sense it's an
+option that can be specified for rules (i.e., that they can see the markup).
+
+  We work in reStructuredText and in markdown. If one switches back and forth,
+  it's very easy to use the wrong notation. So useful rules might be:
+
+  * using the wrong sort of inline link text - ``[text](link)`` in reST, for instance
+  * using the wrong number of backticks for literal text - reStructuredText wants them paired
+    (and uses single backticks for more specialised purposes)
+  * markdown doesn't support list items with alphabetic "numbering" (``a.``),
+    but reStructuredText does
+
+  Maybe something on limitations, as well:
+
+  * Linting ``someone@place.io`` and:
+
+    * Vale uses ``rst2html.py`` to produce what it lints
+    * sphinx produces different HTML from the same reStructuredText source
+
+    So debugging why ``support@aiven.io`` complains that ``aiven`` should be ``Aiven``
+    isn't quite as simple as it might be.
+
+    Regardless, the *solution* probably needs a rule that looks at the raw
+    markup (which I hope is reStructuredText and not HTML!)
+
+  * Catch use of markdown style links::
+
+       [words](url)
+
+    in a reStructuredText document - suggest::
+
+       `words <url>`_
+
+For markdown, which Vale supports directly, I'd expect ``raw`` mode to expose
+the markdown syntax.
+
+For reStructuredText, which is first tranaslated to HTML and then the HTML is
+inspected, it's not clear to me whether ``raw`` means the reStructuredText
+source or the HTML. I haven't had time to investigare yet.
+
+((*I should probably find out before finishing this talk - but actually it
+doesn't really matter, because the concept is the same regardless*))
+
 Arbitrary metrics
 ~~~~~~~~~~~~~~~~~
 
@@ -313,6 +454,8 @@ May mean hardcoded support for named metrics, or may mean a general mechanism
 for doing arithemetic on the number of tokens according to their type, scope,
 etc.
 
+* Counting word length distribution, sentence length distribution, etc.
+
 NLP sentence forms
 ~~~~~~~~~~~~~~~~~~
 
@@ -322,6 +465,11 @@ NLP sentence forms
 
   Allows rules that specify a sequence of NLP tokens that may or may not form
   (be part of?) a sentence.
+
+NLP can allow limiting checks to particular parts of speech, etc.
+
+* This is when it might be possible to distinguish ``they're`` / ``their`` / ``there``
+* I find this harder to quantify and think about
 
 Arbitrary script / plugin
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -344,8 +492,19 @@ Pre-built or hand-designed
 
 *"How to get started"*
 
-* Adopt pre-packaged styles - for instance, Microsoft or Google styles, or
-  accessibility styles like Alex
+There are several options, and their applicability will differ according to
+the tool chosen:
+
+* Adopt a "canned" style or styles, something that already exists that does
+  what you want. Examples include Microsoft or Google styles, or accessibility
+  styles like Alex.
+
+* Start with nothing and build up ones own rules
+
+* Start with "canned" styles and add new rules as necessary.
+
+  (I'm assuming that, in general, one can't say "ignore rule ABC from this
+  canned style", but it's possible some tools also allow this)
 
 What it checks
 --------------
@@ -373,6 +532,28 @@ the actual raw markup are relevant to checks (checking for things like
 If the program allows hand-written plugins (in Go, Python or whatever) then
 these may have access to the original file, and that then allows the plugin to
 do whatever it may need to do.
+
+Errors versus warnings
+----------------------
+
+The problem of false positives
+
+* Should one mark, in the text, that this is not an error?
+* If one does that too much, then surely the rule is not useful
+* Possible difficulty of fine-grained "ignore this" markup - not so good
+  if it's paragraph level
+* Is one saying "ignore all checks", or "ignore specific checks"
+
+Programming linters don't have so much problem with this - marking up a
+line to ignore is already fairly fine grained in most programming languages.
+And the tests are generally hard-coded in the linter, so generally have an
+id, and it's possible to say "ignore just this specific test".
+
+That's a bit harder if we're using a *framework* to define new tests.
+
+So, marking parts of the text as "do not check" - is this a good idea, a
+sometimes good idea, a useful compromise, or just awful?
+
 
 Plumbing in to CI
 -----------------
@@ -515,34 +696,6 @@ We use the provided `vale-action`_, the official GitHub action for Vale.
 From the proposal
 =================
 
-Who and Why
------------
-
-As a software developer until the end of 2021, I've been used to both
-automated checking of source code (linting) and also code review. Both are
-valuable in different ways, neither is a substitute for the other.
-
-I'm sure that all documentarians understand the value of having another
-person read over their text and make comments. I want to show that there is
-value in automatic checking as well, beyond spell checking and "grammar
-checking".
-
-The thing that programmers learnt was that surprisingly simple rules can give
-useful results. I'll look at a sequence of such relatively simple rules that
-are applicable to text, and how they can be used to detect common problems.
-
-By the end, at least one of my example use cases should cause each audience
-member to go "Aha! that sounds useful".
-
-I shall definitely be pointing out that it's not necessarily a requirement to
-write your own rule sets - that there are typically pre-bundled sets of rules
-one can adopt, and for different purposes.
-
-While we use Vale as our text linting tool, the talk is not about Vale, but
-about the general techniques of linting documentation, and the types of check
-that one might make. Vale will only be relevant torwards the end, when talking
-about how we use these techniques in our own environment, and specifically in
-our github review process.
 
 Other Information
 -----------------
@@ -562,126 +715,10 @@ relevant part of Vale, now fixed after my first PR to the project.
 
 --------------
 
-Notes
-=====
+Notes that may be incorporated elsewhere
+========================================
 
-Quick (very quick) history of the term linting
-
-  ``lint`` was the name of a program written in 1978 to find common errors and
-  stylistic problems in C code, and it is indeed named in analogy with pulling
-  bits of fluff off fabric. Classically, linting programs don't actually
-  *understand* the programming language they're analysing - they use a set of
-  heuristics and rules to recognise common patterns that are likely to be mistakes.
-  That same approach can be applied to our documentation, and it can be
-  surprisingly powerful.
-
-Benefits of simple checks, that can be fast, and give good result
-
-Text is *not* code - code has rigorous restrictions that do not apply
-to text. However, that doesn't mean that we can't take the idea of
-"simple checks applied to great benefit" - the trick is in working
-out the limits of "simple checks" and "great benefit".
-
-* Spelling
-
-  * This is not a recognised word
-  * ``adn`` -> ``and``, ``supercede`` -> ``supersede`` simple N distance suggestions
-  * anything beyond that is probably best thought of under the other sections
-
-* ...
-
-* If this, then must be that:
-
-  * ``WHO`` needs an occurrence of ``WHO (World Health Organization)``
-
-    * bonus points if can say
-
-      * just one occurrence of the "explanation"
-      * explanation must come first
-
-  * Thing needs an occurrence of Thing®
-
-    * bonus points if can say
-
-      * must be used with ® in the first *title* to use the name
-      * must be used with ® in the first non-title to use the name
-      * first use of name *must* be with ®, regardless
-
-    * also probably want to be able to say that if Thing® occurs, then
-      **after that** in the document there must be the text "Thing® is a
-      registered tradmark of Thing industries."
-
-* ...
-
-* Document structure
-
-  * Restricting checks to certain parts of a document
-  * Only perform this check on *headings*
-
-* NLP - allow limiting checks to particular parts of speech, etc.
-
-  * This is when it might be possible to distinguish ``they're`` / ``their`` / ``there``
-  * Harder to quantify and think about
-
-* Complexity metrics
-
-  * Counting word length distribution, sentence length distribution, etc.
-
-* Original markup - looking at the raw markup
-
-    We work in reStructuredText and in markdown. If one switches back and forth,
-    it's very easy to use the wrong notation. So useful rules might be:
-
-    * using the wrong sort of inline link text - ``[text](link)`` in reST, for instance
-    * using the wrong number of backticks for literal text - reStructuredText wants them paired
-      (and uses single backticks for more specialised purposes)
-    * markdown doesn't support list items with alphabetic "numbering" (``a.``),
-      but reStructuredText does
-
-    Maybe something on limitations, as well:
-
-    * Linting ``someone@place.io`` and:
-
-      * Vale uses ``rst2html.py`` to produce what it lints
-      * sphinx produces different HTML from the same reStructuredText source
-
-      So debugging why ``support@aiven.io`` complains that ``aiven`` should be ``Aiven``
-      isn't quite as simple as it might be.
-
-      Regardless, the *solution* probably needs a rule that looks at the raw
-      markup (which I hope is reStructuredText and not HTML!)
-
-    * Catch use of markdown style links::
-
-         [words](url)
-
-      in a reStructuredText document - suggest::
-
-         `words <url>`_
-
-* "Canned" styles, providing a curated set of checks
-
-  * For instance, Google and Microsoft style guides, accessability style guides
-
-* Errors versus warnings
-
-* The problem of false positives
-
-  * Should one mark, in the text, that this is not an error?
-  * If one does that too much, then surely the rule is not useful
-  * Possible difficulty of fine-grained "ignore this" markup - not so good
-    if it's paragraph level
-  * Is one saying "ignore all checks", or "ignore specific checks"
-
-  Programming linters don't have so much problem with this - marking up a
-  line to ignore is already fairly fine grained in most programming languages.
-  And the tests are generally hard-coded in the linter, so generally have an
-  id, and it's possible to say "ignore just this specific test".
-
-  That's a bit harder if we're using a *framework* to define new tests.
-
-  So, marking parts of the text as "do not check" - is this a good idea, a
-  sometimes good idea, a useful compromise, or just awful?
+We should not really assume that HTML is the only output (<smile>)
 
 * Problems / implementation difficulties
 
