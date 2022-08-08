@@ -718,22 +718,26 @@ relevant part of Vale, now fixed after my first PR to the project.
 Notes that may be incorporated elsewhere
 ========================================
 
+HTML is not the only aim?
+-------------------------
+
 We should not really assume that HTML is the only output (<smile>)
 
-* Problems / implementation difficulties
+Problems / implementation difficulties
+--------------------------------------
 
-  * How to deal with All the markups
+How to deal with All the markups
 
-    * Render into HTML and check that
-    * This isn't always able to be perfect:
+* Render into HTML and check that
+* This isn't always able to be perfect:
 
-      reStructuredText -> HTML with ``rst2html`` (standalone), ``docutils``
-      (more hands on), but the problem is that Sphinx has extra roles and
-      directives, which rst2html/docutils doesn't recognise, and one can't
-      run Sphinx on just selected files
+  reStructuredText -> HTML with ``rst2html`` (standalone), ``docutils``
+  (more hands on), but the problem is that Sphinx has extra roles and
+  directives, which rst2html/docutils doesn't recognise, and one can't
+  run Sphinx on just selected files
 
-    * Does one allow looking at the raw markup (reST) *and* the HTML (which
-      is also in some sense "raw" markup if it is what is being checked)
+* Does one allow looking at the raw markup (reST) *and* the HTML (which
+  is also in some sense "raw" markup if it is what is being checked)
 
 * Vale is a framework that comes with some predefined checks, and the
   ability to load packages of existing checks, but also allows you to
@@ -741,34 +745,38 @@ We should not really assume that HTML is the only output (<smile>)
   all the power of that approach, and also the need to mend it yourself
   if your self-written checks don't work.
 
-* Pros and cons of commercial and open source systems, and so on.
+Pros and cons of commercial and open source systems, and so on
+--------------------------------------------------------------
 
-  Warning: contains vast generalisations!
+Warning: contains vast generalisations!
 
-  * Commercial systems tend to come with pre-setup checks, so
-    that they work "out of the box". However, that may come at
-    the expense of flexibility.
+* Commercial systems tend to come with pre-setup checks, so
+  that they work "out of the box". However, that may come at
+  the expense of flexibility.
 
-    They may also need to send the text to tbe checked out into
-    the cloud (where someone else's computer can do powerful stuff
-    that yours might not be able to), with all the security implications
-    that this implies.
+  They may also need to send the text to tbe checked out into
+  the cloud (where someone else's computer can do powerful stuff
+  that yours might not be able to), with all the security implications
+  that this implies.
 
-  * Open source systems are more likely to come as a toolkit that
-    you have to assemble yourself to get any sophisitication.
-    Although pre-packaged setups may be available. It is, however,
-    more likely that you'll be able to make them do new things that
-    no-one else has tried. It's also likely to be easier to contribute
-    if the tool doesn't do quite what you want (normal open source project
-    caveats apply)
+* Open source systems are more likely to come as a toolkit that
+  you have to assemble yourself to get any sophisitication.
+  Although pre-packaged setups may be available. It is, however,
+  more likely that you'll be able to make them do new things that
+  no-one else has tried. It's also likely to be easier to contribute
+  if the tool doesn't do quite what you want (normal open source project
+  caveats apply)
 
-  * There must surely be closed source but free options? I suppose
-    the spelling and "grammar" checking you get bundled with
-    things like Word probably sort-of counts, as it's not something
-    you pay extra for.
+* There must surely be closed source but free options? I suppose
+  the spelling and "grammar" checking you get bundled with
+  things like Word probably sort-of counts, as it's not something
+  you pay extra for.
 
-    And browser tools may even simple stuff for you...
-    (that's getting a bit fuzzy)
+  And browser tools may even simple stuff for you...
+  (that's getting a bit fuzzy)
+
+Interactive versus later checking
+---------------------------------
 
 Hmm. Running a checker *after* writing (or in CI) versus having it run as you
 type. Pros and cons. Certain sorts of check could be very irritating (I'm
@@ -783,6 +791,9 @@ then it is really optional whether people run it locally. Although, turn and
 turn again, that brings us back to the warning/error discussion - what should
 even *show up* in CI. It also allows domain experts to fix things - this can
 be important for some things (the ® check again).
+
+Thoughts on writing local rules
+-------------------------------
 
 Arguably, having to write one's own configuration (beyond basic spelling and
 maybe some very general rules) is always going to be a requirement - only you
@@ -799,7 +810,10 @@ on whether new checks are written via plugins using a programming language,
 or whether there's some "higher level" abstraction (also) available. This
 is I think a good thing about Vale.
 
-From twitter (7 Auguust 2022):
+Can we write a check for "bad uses of ``like``"?
+------------------------------------------------
+
+From twitter (7 August 2022):
 
   **David R. MacIver** @DRMacIver
 
