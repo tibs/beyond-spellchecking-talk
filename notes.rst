@@ -799,6 +799,33 @@ on whether new checks are written via plugins using a programming language,
 or whether there's some "higher level" abstraction (also) available. This
 is I think a good thing about Vale.
 
+From twitter (7 Auguust 2022):
+
+  **David R. MacIver** @DRMacIver
+
+  I think I need a linter for my tweets that says "Do you really want to do
+  that?" every time I use the word "like" not as a verb.
+
+  Replying to @DRMacIver **Tibs**
+
+  ✅ Adds to ideas of potential tests for my talk on linting text...
+  (hurriedly points out, I'm not going to *implement* the test, but I am
+  interested in how it would be done...)
+
+  **David R. MacIver** @DRMacIver
+
+  I'm not sure what the current state of part of speech tagging is like, but
+  assuming it's pretty good it seems like a relatively easy thing to check
+  what part of speach "like" is being used as and complain if it's not a verb.
+
+  @DRMacIver Replying to @DRMacIver and @much_of_a
+
+  Hmm although I guess you want more than that now that I think about it, as
+  "a like" is a perfectly valid noun in internet.
+
+  Me
+
+  🤔
 
 --------------
 
