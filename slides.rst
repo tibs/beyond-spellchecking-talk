@@ -42,13 +42,12 @@ And this is not the first of them
 
 
 
-
-Fin
----
-
 .. raw:: pdf
 
     PageBreak twoColumnNarrowRight
+
+Fin
+---
 
 Written in reStructuredText_, converted to PDF using rst2pdf_
 
