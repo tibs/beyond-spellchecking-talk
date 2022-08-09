@@ -336,7 +336,7 @@ If *this* is present, then *that* must also be present
 Example messages:
 
 * ``WHO has no definition``
-* ``At least one 'PostgreSQL' must be marked as ®``
+* ``At least one use of 'PostgreSQL' must be marked as ®``
 
 The example that Vale uses is a rule that says that if a word occurs that is 3
 or more capital letters (for instance, ``WHO``) then there must also be an
@@ -377,7 +377,7 @@ In the context of our ® check, we actually would like to say:
 
 * ``Thing`` must be used with ® in the first *title* to use the name
 * ``Thing`` must be used with ® in the first non-title to use the name
-* first use of ``Thing`` *must* be with ®, regardless
+* First use of ``Thing`` *must* be with ®, regardless
 
 We may also want to be able to say that if ``Thing®`` occurs, then **after
 that** in the document there must be the text "``Thing® is a registered
@@ -473,8 +473,8 @@ source or the HTML. I haven't had time to investigare yet.
 ((*I should probably find out before finishing this talk - but actually it
 doesn't really matter, because the concept is the same regardless*))
 
-Aside: Checking for ``alt`` text on images
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Aside: Checking there is ``alt`` text on images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Example message:
 
@@ -507,7 +507,6 @@ Example message:
 
 * ``Try to keep the Flesch-Kincaid grade level (12) below 8``
 
-
 May mean hardcoded support for named metrics, or may mean a general mechanism
 for doing arithemetic on the number of tokens according to their type, scope,
 etc.
@@ -525,9 +524,9 @@ NLP (Natural Language Processing) sentence analysis
 
 Example message:
 
-* ``Did you mean "cars are" instead of "car's are"`
+* ``Did you mean "cars are" instead of "car's are"``
 
-  (from a rule for checking that a plural is used before ``are``, rather than
+  (from a rule for checking that a plural is used before ```are``, rather than
   ``'s'``)
 
 NLP can allow limiting checks to particular parts of speech, etc.
