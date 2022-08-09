@@ -22,34 +22,16 @@ pageTemplates:
         showHeader: false
         showFooter: true
 
-    oneColumn:
-        frames:
-        - - 0cm
-          - 0cm
-          - 100%
-          - 100%
-
-    twoColumn:
-        frames:
-        - - 0cm
-          - 0cm
-          - 49%
-          - 100%
-        - - 51%
-          - 0cm
-          - 49%
-          - 100%
-
     twoColumnNarrowRight:
         frames:
-        - - 0cm
-          - 0cm
+        - - 3%
+          - 3%
           - 69%
-          - 100%
+          - 94%
         - - 71%
-          - 0cm
-          - 29%
-          - 100%
+          - 3%
+          - 26%
+          - 94%
 
 linkColor: "#1b7b88"
 
