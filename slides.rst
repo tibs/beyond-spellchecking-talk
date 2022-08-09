@@ -46,12 +46,21 @@ And this is not the first of them
 Fin
 ---
 
+.. raw:: pdf
+
+    PageBreak twoColumnNarrowRight
+
 Written in reStructuredText_, converted to PDF using rst2pdf_
 
 Slides and accompanying material at https://github.com/tibs/beyond-spellchecking
 
 |cc-attr-sharealike| This slideshow and its related files are released under a
 `Creative Commons Attribution-ShareAlike 4.0 International License`_.
+
+.. image:: images/qr_beyond_spellchecking.png
+    :align: right
+
+.. And that's the end of the slideshow
 
 .. |cc-attr-sharealike| image:: images/cc-attribution-sharealike-88x31.png
    :alt: CC-Attribution-ShareAlike image
