@@ -37,8 +37,8 @@ for convenience.
 The PDF files may not always be as up-to-date as the source files, so check
 their timestamps.
 
-The QR code was generated using the qrencode_ command line program, which I
-installed with ``brew install qrencode`` on my Mac.
+The QR code was generated using the command line program for qrencode_, which
+I installed with ``brew install qrencode`` on my Mac.
 
 .. _qrencode: https://fukuchi.org/works/qrencode/
 
