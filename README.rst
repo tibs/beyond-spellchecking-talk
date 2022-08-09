@@ -40,7 +40,7 @@ their timestamps.
 The QR code was generated using the qrencode_ command line program, which I
 installed with ``brew install qrencode`` on my Mac.
 
-.. _qrencode:: https://fukuchi.org/works/qrencode/
+.. _qrencode: https://fukuchi.org/works/qrencode/
 
 The slide notes
 ~~~~~~~~~~~~~~~
