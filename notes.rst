@@ -68,7 +68,7 @@ that one might make. Vale will only be relevant torwards the end, when talking
 about how we use these techniques in our own environment, and specifically in
 our github review process.
 
-History of linting
+aHistory of linting
 ------------------
 
 Quick (very quick) history of the term linting
@@ -95,32 +95,21 @@ Types of check
 
 *"What we might check"*
 
-.. note:: Does the structure "thing we check, explanation/example, moral (what
-          we learn from how applicable/useful/difficult this is)" scale? It
-          has some nice resonance to it, but isn't worth straining to fit.
+So let's work through what sorts of check we might make with a linter, and
+think about some of the implications.
 
-.. note:: I believe I want to start with "Spelling", but what order do I then
-          want?
+.. note:: I've definitely taken inspiration from Vale for much of this, but
+          that's partly because I think it has a reasonable set of tests that
+          we can look at.
 
-          Also, what have I missed (because I started with that Vale
-          provides), and what should I actually not include (if it is
-          too specialiseed - I don't think this is an issue for the notes, but
-          quite likely is for the slides).
+          The slides are almost certainly not going to address all of these!
 
 Spelling
 ~~~~~~~~
 
-(vale: ``spelling``)
+Example message:
 
-  Looks up words in one or more Hunspell-compatible dictionaries. Supports filters
-  and a file of words to ignore.
-
-  "'Arglebargle' does not seem to be a word"
-
-  *We use this*
-
-  Note: uses the dictionary as a word list, but doesn't support all Hunspell
-  capabilities. For instance, it doesn't support ``KEEPCASE`` (and ``/K``).
+* ``'Arglebargle' does not seem to be a word``
 
 *Notes from the other night:*
 
@@ -178,10 +167,15 @@ with a good example of this other than ``aiven`` because of the problem we
 have with checking ``mailto:`` items using Vale?)
 
 
+.. admonition:: Vale ``spelling``
 
-.. note:: The following subsections riff off what vale provides, at least
-          initially. I shall need to change the order, and I'll quite likely
-          not put all of these into the slides...
+  Looks up words in one or more Hunspell-compatible dictionaries. Supports filters
+  and a file of words to ignore.
+
+  *We use this*
+
+  Note: uses the dictionary as a word list, but doesn't support all Hunspell
+  capabilities. For instance, it doesn't support ``KEEPCASE`` (and ``/K``).
 
 Aside: word versus token versus ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,11 +201,9 @@ zero or more characters.
 Repetition
 ~~~~~~~~~~
 
-(vale: ``repetition``)
+Example message:
 
-   Looks for repetition of its tokens.
-
-   "'the' is repeated"
+* ``'the' is repeated``
 
 We are probably all familiar with the example of:
 
@@ -233,30 +225,43 @@ That means that the rule needs to specify which words to check for.
 The question is, how often do you actually see this done in real documents,
 and thus is it worth actually adding a test for it?
 
+.. admonition:: Vale ``repetition``
+
+   Looks for repetition of its tokens.
+
 Don't say that
 ~~~~~~~~~~~~~~
 
-(vale: ``existence``)
+Example message:
 
-  Look to see if particular tokens exist. Supports exceptions.
-
-  "Consider not using 'bad phrase'"
+* ``Consider not using 'it is obvious that'``
 
 Examples might include complaining about use of the words ``simply`` and
 ``obviously``, and the phrase ``it is obvious``.
 
+.. admonition:: Vale ``existence``
+
+  Look to see if particular tokens exist. Supports exceptions.
+
 Use *this* instead of *that*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(vale: ``substitution``)
+Example messages:
 
-  Looks for token A and suggests token B instead. Supports exceptions.
+* Actual errors:
 
-  "Consider using 'B' instead of 'A'"
+  * ``Use 'and' instead of 'adn'``
+  * ``Use 'supersede' instead of 'supercede'``
+  * ``Use 'Aiven for PostgreSQL' instead of 'Aiven PostgreSQL'``
 
-  *We use this*
+* Suggestions:
 
-A simple examples might be ``adn`` -> ``and`` (that's a relatively common
+  * ``Consider using 'flink' instead of 'flick'``
+  * ``Consider using 'for instance' instead of 'e.g.'``
+
+((*Rework the following to indicate the distinction between "wrong" and "maybe".*))
+
+Examples might be ``adn`` -> ``and`` (that's a relatively common
 typo) or ``supercede`` -> ``supersede`` (a mistake I know I often make). These
 are basically N-distance fuzziness or ``slop`` changes, and are often provided
 as part of indepdenent spellcheckers.
@@ -275,6 +280,15 @@ A little more complex: when referring to the services we provide, we must be
 careful not to imply ownership of the products/projects ((*what's the correct
 term I want here?*)). So we have rules like ``Aiven PostgreSQL`` -> ``Aiven
 for PostgreSQL``.
+
+.. admonition:: Vale ``substitution``
+
+  Looks for token A and suggests token B instead. Supports exceptions.
+
+  "Consider using 'B' instead of 'A'"
+
+  *We use this, although all our examples are currently treated as errors,
+  rather than suggestions*
 
 Aside: Create tests you need, retire them when they're not
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -296,36 +310,33 @@ is better addressed in the text editor.)
 Too many / too few
 ~~~~~~~~~~~~~~~~~~
 
-(vale: ``occurrence``)
+Example message:
+
+* ``More than 3 commas in sentence``
+
+.. admonition:: Vale ``occurrence``
 
    Enforces minimum or maximum times a token appears. Supports scope
    - e.g., ``sentence``
 
-   "More than 3 commas in sentence"
-
 One or the other, not both
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(vale: ``consistency``)
+Example message:
+
+* ``Inconsistent spelling of 'center' and 'centre'``
+
+.. admonition:: Vale ``consistency``
 
    Ensures key and value do not occur in the same scope.
-
-   "Inconsistent spelling of 'center'"
 
 If *this* is present, then *that* must also be present
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(vale: ``conditional``)
+Example messages:
 
-  Ensures that if token A is present, then so it token B. Supports exceptions, scope.
-
-  Terminology on this one is a bit confusing.
-
-  "WHO has no definition"
-
-  "At least one 'PostgreSQL' must be marked as ®"
-
-  *We use this*
+* ``WHO has no definition``
+* ``At least one 'PostgreSQL' must be marked as ®``
 
 The example that Vale uses is a rule that says that if a word occurs that is 3
 or more capital letters (for instance, ``WHO``) then there must also be an
@@ -346,6 +357,14 @@ Bonus points if the rule can say:
   *scope* - for instance, in body text, in a heading, in a footnote.
 
 We use this for the `®` checks ((*either explain here or late...*))
+
+.. admonition:: Vale ``conditional``
+
+  Ensures that if token A is present, then so it token B. Supports exceptions, scope.
+
+  Terminology on this one is a bit confusing.
+
+  *We use this*
 
 Aside: scope
 ~~~~~~~~~~~~
@@ -369,31 +388,44 @@ acknowledgement texts into a common footer, but even so we may have occasional
 terms that aren't acknowledged in that common footer, and then we would want
 to be able to say this per-section.)
 
+  Nice use of ``scope`` in https://github.com/errata-ai/vale/issues/184, which
+  checks in scope "link" for links that have names like ``this``.
+
 Capitalisation
 ~~~~~~~~~~~~~~
 
-(vale: ``capitalization``)
+Example message:
 
-  Checks that the text in the specified scope is capitalized according to the chosen scheme.
-  Supports exceptions, scope.
-
-  "'Badly Capitalised Heading' should be in sentence case"
-
-  *We use this*
-
-  Note: The capitalization metrics are *not* necessarily as simple as one might expect.
-  For instance, ``$sentence`` isn't just "first word must start with a capital, rest
-  must not". This is a Good Thing in practice, if harder to explain.
+* ``'Badly Capitalised Heading' should be in sentence case``
 
 While this is very useful, it's hard to think of how to make it well
 specified, easy to understand, and doing what one wants. There are some
 external rules on this sort of thing, which can be adopted.
 
 Problems: consider ``iPhone prices``, ``The importance of NASA``,
-``Remembering Terry Jones``.
+``Remembering Terry Jones``, which are all correctly formed.
+
+Note: The Vale capitalization metrics are *not* necessarily as simple as one
+might expect. For instance, ``$sentence`` isn't just "first word must start
+with a capital, rest must not". This is a Good Thing in practice, if harder to
+explain. I think any system implementing this is going to have some apparent
+oddities.
+
+.. admonition:: Vale ``capitalization``
+
+  Checks that the text in the specified scope is capitalized according to the chosen scheme.
+  Supports exceptions, scope.
+
+  *We use this*
 
 Aside: Looking at the raw text
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Example messages:
+
+* ``In reStructuredText, one backtick without a role becomes italics``
+* ``In markdown, two backticks is redundant - did you mean single backtick?``
+* ``Use reStructuredText link format, not markdown``
 
 It can sometimes be useful to make a rule apply the original raw text, so that
 the markup can also be inspected.
@@ -441,14 +473,40 @@ source or the HTML. I haven't had time to investigare yet.
 ((*I should probably find out before finishing this talk - but actually it
 doesn't really matter, because the concept is the same regardless*))
 
+Aside: Checking for ``alt`` text on images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Example message:
+
+* ``Image is missing alt text``
+
+This definitely feels like a good text, but how is it done?
+
+* Is it a test on the raw markup? (which feels a bit too low level)
+* Does it require some plugin code? (ditto)
+
+Note that in Vale, things like ``alt`` and ``title`` should be checked by
+default - see https://github.com/errata-ai/vale/issues/59. This doesn't
+necessarily address how one spots that they are **missing**, though.
+
+Hmm. Checking for the *absence* of something is perhaps a different sort of
+check - maybe it deserves its own catergory. Or can it be counted under the
+`Too many / too few`_ section? That's really (as phrased above) about the
+count of a particular token, and this is about the absence of that entity (or
+even the absence of a scope within a scope).
+
+  ((*It doesn't help to look for an empty token in a scope if that scope is
+  entirely absent - so this *is* probably requiring a scope be present inside
+  another scope. Which is getting a bit meta, it's not surprising if it's not
+  directly supported...*))
+
 Arbitrary metrics
 ~~~~~~~~~~~~~~~~~
 
-(vale: ``metric``)
+Example message:
 
-  Calculates one of various arbitrary metrics and reports if it is exceeded.
+* ``Try to keep the Flesch-Kincaid grade level (12) below 8``
 
-  "Try to keep the Flesch-Kincaid grade level (%s) below 8"
 
 May mean hardcoded support for named metrics, or may mean a general mechanism
 for doing arithemetic on the number of tokens according to their type, scope,
@@ -456,25 +514,39 @@ etc.
 
 * Counting word length distribution, sentence length distribution, etc.
 
-NLP sentence forms
-~~~~~~~~~~~~~~~~~~
+.. admonition:: Vale ``metric``
 
-.. note:: There must be a better subtitle for that!
+  Calculates one of various arbitrary metrics and reports if it is exceeded.
 
-(vale: ``sequence``)
+NLP (Naturla Language Processing) sentence analysis
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Allows rules that specify a sequence of NLP tokens that may or may not form
-  (be part of?) a sentence.
+((*There must be a better subtitle for that!*))
+
+Example message:
+
+* ``Did you mean "cars are" instead of "car's are"`
+
+  (from a rule for checking that a plural is used before ``are``, rather than
+  ``'s'``)
 
 NLP can allow limiting checks to particular parts of speech, etc.
 
 * This is when it might be possible to distinguish ``they're`` / ``their`` / ``there``
 * I find this harder to quantify and think about
+* I don't intend to spend much time on this in the talk!
+
+.. admonition:: Vale ``sequence``
+
+  Allows rules that specify a sequence of NLP tokens that may or may not form
+  (be part of?) a sentence.
+
+  Example at https://vale.sh/explorer/apos_are/, Detect extraneous apostrophes before 'are'.
 
 Arbitrary script / plugin
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(vale: ``script``)
+.. admonition:: Vale ``script``
 
   Write a rule using arbitrary Go code (well, a Go-like scripting language)
 
@@ -655,7 +727,7 @@ We use the provided `vale-action`_, the official GitHub action for Vale.
 
 .. _`vale-action`: https://github.com/errata-ai/vale-action
 
-``devportal/.github/workflows/lint.yaml``
+Our ``devportal/.github/workflows/lint.yaml`` is something like the following:
 
 .. code:: yaml
 
@@ -678,13 +750,7 @@ We use the provided `vale-action`_, the official GitHub action for Vale.
         uses: actions/checkout@master
 
       - name: Vale
-        # We want support for at least vale v2.15.3
-        # The current release of vale-action, v1.5.0, only provides vale 2.15.2
-        # So for the moment we need to use vale-action master, which provides
-        # at least vale 2.15.5.
-        # When there is a vale-action that provides a version we can use, re-pin
-        # this to a specific version of vale-action.
-        uses: errata-ai/vale-action@master
+        uses: errata-ai/vale-action
         with:
           files: '["index.rst", "docs"]'
         env:
@@ -936,6 +1002,13 @@ likely to be incomplete on that.
   Allows rules that specify a sequence of NLP tokens that may or may not form
   (be part of?) a sentence.
 
+  Currently, Vale uses prose_, an NLP (Natural Language Processing) library
+  for Go. Documentation for the POS (part of speech) tags is there - I don't
+  know yet if there's a standard for those?
+
+  There's work in progress to look at using spaCy_ (maybe as an optional
+  extra?), which would allow support for other languages.
+
 ``script``
 
   Write a rule using arbitrary Go code (well, a Go-like scripting language)
@@ -945,6 +1018,9 @@ to accept (add to the exception lists for all styles above) or reject (just
 complain about immediately). This *looks* as if it is a good alternative to
 dictionaries, but actually isn't for "reasons" (mainly that "adds to the
 exception list for all styles", which is a bit of a broad brush).
+
+.. _prose: https://github.com/jdkato/prose/
+.. _spaCy: https://spacy.io/
 
 Some notes on what Grammarly provides
 -------------------------------------
