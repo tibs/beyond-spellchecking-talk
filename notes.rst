@@ -68,8 +68,8 @@ that one might make. Vale will only be relevant torwards the end, when talking
 about how we use these techniques in our own environment, and specifically in
 our github review process.
 
-aHistory of linting
-------------------
+Origins of "linting"
+--------------------
 
 Quick (very quick) history of the term linting
 
@@ -518,7 +518,7 @@ etc.
 
   Calculates one of various arbitrary metrics and reports if it is exceeded.
 
-NLP (Naturla Language Processing) sentence analysis
+NLP (Natural Language Processing) sentence analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ((*There must be a better subtitle for that!*))
