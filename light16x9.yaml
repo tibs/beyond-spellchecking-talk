@@ -57,6 +57,13 @@ styles:
         parent: normal
         alignment: TA_CENTER
 
+    # I want a bit more vertical space after the slide heading
+    # (the default is 6)
+    heading1:
+        fontSize: 175%
+        parent: heading
+        spaceAfter: 12
+
     literal:
         textColor: "#000000"
 
