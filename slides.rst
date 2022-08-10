@@ -34,6 +34,8 @@ Beyond spellchecking - What else can we check automatically
 
       Spacer 0 5
 
+.. |cross| image:: images/green-cross.png
+.. |think| image:: images/thinking-face-emoji.png
 
 Here be slides
 --------------
@@ -52,12 +54,13 @@ Origins of "linting"
 --------------------
 
 ``lint`` was the name of a program written in 1978 to find common errors and
-stylistic problems in C code, and it is indeed named in analogy with pulling
-bits of fluff off fabric.
+stylistic problems in C code
 
-We're after simple checks, that can be fast, and give good results.
+Named in analogy with pulling bits of fluff off fabric
 
-But rememember, text is not as restricted as code.
+Simple checks, that can be fast, and give good results.
+
+But remember, text is not as restricted as code.
 
 Types of check
 --------------
@@ -67,19 +70,19 @@ Let's have a run through what we might do given that definition...
 Note: the messages described are not necesssarily from any program, and may be
 made up...
 
-Spelling
---------
+|cross| Spelling
+----------------
 
-* ``'Arglebargle' does not seem to be a word``
+``'Arglebargle' does not seem to be a word``
 
-Aside: word versus token versus ...
------------------------------------
+|think| word versus token versus ...
+------------------------------------
 
 
-Repetition
-----------
+|cross| Repetition
+------------------
 
-* ``'the' is repeated``
+``'the' is repeated``
 
 ::
 
@@ -87,107 +90,119 @@ Repetition
     and the
     the dog
 
-Don't say that
---------------
+|cross| Don't say that
+----------------------
 
-* ``Consider not using 'it is obvious that'``
+``Consider not using 'it is obvious that'``
 
-Use *this* instead of *that*
-----------------------------
+|cross| Use *this* instead of *that* - errors
+---------------------------------------------
 
-Errors:
+``Use 'and' instead of 'adn'``
 
-* ``Use 'and' instead of 'adn'``
-* ``Use 'supersede' instead of 'supercede'``
-* ``Use 'Aiven for Redis' instead of 'Aiven Redis'``
+``Use 'supersede' instead of 'supercede'``
 
-Use *this* instead of *that*
-----------------------------
+``Use 'Aiven for Redis' instead of 'Aiven Redis'``
 
-Suggestions:
+|cross| Use *this* instead of *that* - suggestions
+--------------------------------------------------
 
-* ``Consider using 'flink' instead of 'flick'``
-* ``Consider using 'for instance' instead of 'e.g.'``
+``Consider using 'flink' instead of 'flick'``
 
-Aside: Create tests you need, retire them when they're not
-----------------------------------------------------------
+``Consider using 'for instance' instead of 'e.g.'``
 
-If the person who mistypes ``adn`` leaves the team
+|think| Create tests you need, retire them when not
+---------------------------------------------------
+
+if the person who mistypes ``adn`` leaves the team
 
 you probably don't still need the check for ``"adn" should be replaced by "and"``
 
-Aside: Why auto-correction is not (generally) a (good) thing
-------------------------------------------------------------
+|think| Against auto-correction
+-------------------------------
 
 
-Too many / too few
-------------------
-
-* ``More than 3 commas in sentence``
-
-One or the other, not both
+|cross| Too many / too few
 --------------------------
 
-* ``Inconsistent spelling of 'center' and 'centre'``
+``More than 3 commas in sentence``
 
-If this is present, then that must also be present
---------------------------------------------------
+|cross| One or the other, not both
+----------------------------------
 
-* ``WHO has no definition``
-* ``At least one use of 'PostgreSQL' must be marked as ®``
+``Inconsistent spelling of 'center' and 'centre'``
 
-Aside: scope
-------------
+|cross| If *this* is present, then *that* must also be
+------------------------------------------------------
 
-We would often like to be more specific:
+``WHO has no definition``
 
-* ``Thing`` must be used with ® in the first *title* to use the name
-* ``Thing`` must be used with ® in the first non-title to use the name
-* First use of ``Thing`` *must* be with ®, regardless
+``At least one use of 'PostgreSQL' must be marked as ®``
 
-Capitalisation
---------------
+|think| scope
+-------------
 
-* ``'Badly Capitalised Heading' should be in sentence case``
+"Scope" - some part of a document.
+
+``Thing`` must be used with ® in the first *title* to use the name
+
+``Thing`` must be used with ® in the first non-title to use the name
+
+First use of ``Thing`` *must* be with ®, regardless
+
+|cross| Capitalisation
+----------------------
+
+``'Badly Capitalised Heading' should be in sentence case``
 
 But consider carefully:
 
-* ``iPhone prices``
-* ``The importance of NASA``
-* ``Remembering Terry Jones``
+``iPhone prices``
+
+``The importance of NASA``
+
+``Remembering Terry Jones``
 
 
-Aside: Looking at the raw text
-------------------------------
+|think| Looking at the raw text
+-------------------------------
 
 Checking reStructuredText:
 
-* ``One backtick without a role becomes italics``
-* ``Use reStructuredText link format, not markdown``
+``One backtick without a role becomes italics``
+
+``Use reStructuredText link format, not markdown``
 
 Checking markdown:
 
-* ``Two backticks is redundant - did you mean just one?``
+``Two backticks is redundant - did you mean just one?``
 
 
-Aside: Checking there is alt text on images
--------------------------------------------
+|think| Checking for absence
+----------------------------
 
-* ``Image is missing alt text``
+For instance, that all images have ``alt`` text
 
-Arbitrary metrics
------------------
+``Image is missing alt text``
 
-* ``Try to keep the Flesch-Kincaid grade level (12) below 8``
+Not the same as "is zero length" - we want *structural element* occurs zero times
 
-NLP (Natural Language Processing) sentence analysis
----------------------------------------------------
-
-* ``Did you mean "cars are" instead of "car's are"``
-* ``Don't use "like" as an interjection``
-
-Arbitrary script / plugin
+|cross| Arbitrary metrics
 -------------------------
+
+``Try to keep the Flesch-Kincaid grade level (12) below 8``
+
+|cross| Sentence analysis
+-------------------------
+
+NLP (Natural Language Processing)
+
+``Did you mean "cars are" instead of "car's are"``
+
+``Don't use "like" as an interjection``
+
+|cross| Arbitrary script / plugin
+---------------------------------
 
 Pre-built or hand-designed
 --------------------------
@@ -198,37 +213,149 @@ What it checks
 Errors versus warnings
 ----------------------
 
-Plumbing in to CI
------------------
+An error must be fixed, and will cause a build to fail.
 
-Tools for spellchecking
------------------------
+A warning is just a warning.
 
-But a brief overview...
+What do you do with them, if you have warnings?
 
-* alex
+Plumbing in to CI (continuous integration)
+------------------------------------------
+
+Run the checks automatically when a review is requested (GitHub: PR) or before
+deploying the documentation.
+
+No errors before deployment...
+
+Available tools
+---------------
+
+Just a brief overview...
+
 * Vale
-* textlint
+* LTeX and LanguageTool
+* alexjs
 * proselint
 * redpen
-* LanguageTool and LTeX
+* textlint
+
+((**Do I want one slide per tool, or just to talk over the list?**))
+
+Vale
+----
+
+Vale_ is a command line tool, open source, offline for privacy.
+
+Various packaged rulesets are available.
+
+Rules ("Styles") are specified via YAML files that build on existing concepts,
+or (less often) via code in a Go-like language.
+
+.. _Vale: https://vale.sh
+
+LTeX and LanguageTool
+---------------------
+
+LTeX_ provides offline grammar checking of various markup languages using
+LanguageTool_
+
+BibTeX, ConTeXt, LaTeX, Markdown, Org, reStructuredText, R Sweave, and XHTML
+
+New rules for LanguageTool are stored as XML files.
+
+.. _LTeX: https://valentjn.github.io/ltex/
+.. _LanguageTool: https://languagetool.org/
+
+alexjs
+------
+
+alexjs_ is designed to "Catch insensitive, inconsiderate writing" in markdown documents.
+
+.. _alexjs: https://alexjs.com/
+
+proselint
+---------
+
+proselint_
+
+Rules are written as plugins using Python
+
+.. _proselint: http://proselint.com/
+
+redpen
+------
+
+redpen_
+
+Custom validators can be written as plugins in Java or JavaScript
+
+.. _redpen: https://redpen.cc/
+
+
+textlint
+--------
+
+textlint_
+
+Rules are written as plugins using JavaScript.
+
+.. _textlint: https://textlint.github.io/
+
 
 Use in Aiven's developer documentation
 --------------------------------------
 
+https://developer.aiven.io/ and https://github.com/aiven/devportal
+
 We use Vale
 -----------
+
+It's a small program, it's fast, it's very configurable.
+
+Development is ongoing, the code is readable, and the author responds fast.
+
+It's well known in the WtD community.
+
+But we did (do) need to configure it, and it's a relatively small project.
 
 The checks we use
 -----------------
 
+* ``spelling`` Spell checking - the default US-en dictionary, plus our own
+* ``capitalization`` Capitalisation in headings
+* ``substitution`` "Use *this* instead of *that*"
+* ``conditional`` "If *this* then *that*" for `®` checking
+
 Use at the command line
 -----------------------
 
-Use in CI
----------
+``make spell``
+
+Use in CI (continuous integration)
+----------------------------------
+
+...or making checks happen automatically when you push a PR (pull request) or
+otherwise put some text out for review
+
+We use `vale-action`_, the official GitHub action for Vale
+
+.. _`vale-action`: https://github.com/errata-ai/vale-action
 
 
+Summary
+-------
+
+((**Not final yet**))
+
+* We can check things beyond spelling
+* Relatively simple techniques can be useful
+* Don't check for the sake of it
+* There is a good choice of tools available
+* You don't have to build it yourself
+* You can check as part of your CI toolchain
+
+
+.. -----------------------------------------------------------------------------
 
 .. raw:: pdf
 

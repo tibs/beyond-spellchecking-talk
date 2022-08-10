@@ -83,6 +83,13 @@ Makefile.
 .. _CamPUG: https://www.meetup.com/CamPUG/
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 
+Links mentioned in the slides
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These are the links mentioned in the slides, for convenience:
+
+((**To be filled in from the content in the slide deck**))
+
 --------
 
   |cc-attr-sharealike|

@@ -369,7 +369,7 @@ We use this for the `®` checks ((*either explain here or late...*))
 Aside: scope
 ~~~~~~~~~~~~
 
-The ability to take account of where in the document structure a check is applied.
+The ability to take control in which parts of the document structure a check is applied.
 
 For instance: only in *headings* or *footnotes*.
 
@@ -473,12 +473,17 @@ source or the HTML. I haven't had time to investigare yet.
 ((*I should probably find out before finishing this talk - but actually it
 doesn't really matter, because the concept is the same regardless*))
 
-Aside: Checking there is ``alt`` text on images
+Aside: Checking for absence
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Example message:
 
 * ``Image is missing alt text``
+
+For instance, checking there is ``alt`` text on images
+
+Not the same as "is zero length" - we want *structural element* occurs zero
+times, not "*text* occurs zero times" (which would be `Too many / too few`_).
 
 This definitely feels like a good text, but how is it done?
 
@@ -1054,42 +1059,25 @@ Big question - does it understand markup? Since it's basically catching
 key events (what you type), it doesn't really sound like their sort of
 thing.
 
-Some notes on what LanguageTool provides
-----------------------------------------
+Some notes on what LTeX and LanguageTool provide
+------------------------------------------------
 
-https://languagetool.org/
+LTeX_ provides offline grammar checking of various markup languages using
+LanguageTool_
 
-Source code at https://github.com/languagetool-org/languagetool
-
-Multi-language
-
-https://dev.languagetool.org/development-overview is the documentation
-on how to write new error detection rules. They're stored as XML files.
-
-As to checking with markup - https://github.com/languagetool-org/languagetool/issues/445
-(closed in 2018) suggests it's not something they see as their business to do,
-nor do they have the resources. The best suggestion looks to be "convert to
-plain text and check that". But see LTeX_ below...
-
-.. _LTeX:
-
-LanguageTool and LTeX - providing a command line interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-https://valentjn.github.io/ltex/ - Grammar/Spell Checker Using LanguageTool
-with Support for LATEX, Markdown, and Others
-
-https://github.com/valentjn/vscode-ltex
-
-All in one solution, offline checking, LSP (language server protocol)
-support. Does support reStructuredText, at "Good" level. Works with
-Emacs, Vim, VS Code.
+It currently supports BibTeX, ConTeXt, LaTeX, Markdown, Org, reStructuredText,
+R Sweave, and XHTML documents.
 
 ``brew install ltex-ls``
 
-I think this looks like a viable way to use LanguageTool with markup.
+https://dev.languagetool.org/development-overview is the documentation on how
+to write new error detection rules for LanguageTool. They're stored as XML
+files.
 
-Perhaps it compares with the Vale server, in some ways, as well.
+
+.. _LTeX: https://valentjn.github.io/ltex/
+.. _LanguageTool: https://languagetool.org/
+
 
 Some notes on alexjs
 --------------------
