@@ -37,21 +37,21 @@ Beyond spellchecking - What else can we check automatically
 .. |cross| image:: images/green-cross.png
 .. |think| image:: images/thinking-face-emoji.png
 
-Here be slides
---------------
-
-And this is not the first of them
-
-Note to self: first pass at slide content, by copying the current ToC from the
-notes document (!)
-
-Let's not take that too seriously...
-
 Introduction
 ------------
 
-Origins of "linting"
---------------------
+Writing documentation is hard, and spotting errors in that documentation is
+harder. What can we do to help?
+
+* "Linting"
+* A review of checks we might make
+* Adopt existing checks or grow your own
+* Some tools
+* Plumbing checks into "docs-as-code"
+* What we do at Aiven
+
+"linting"
+---------
 
 ``lint`` was the name of a program written in 1978 to find common errors and
 stylistic problems in C code
@@ -65,10 +65,6 @@ But remember, text is not as restricted as code.
 Types of check
 --------------
 
-Let's have a run through what we might do given that definition...
-
-Note: the messages described are not necesssarily from any program, and may be
-made up...
 
 |cross| Spelling
 ----------------
@@ -110,6 +106,15 @@ made up...
 ``Consider using 'flink' instead of 'flick'``
 
 ``Consider using 'for instance' instead of 'e.g.'``
+
+|think| Errors versus warnings
+------------------------------
+
+An error must be fixed, and will cause a build to fail.
+
+A warning is just a warning.
+
+What do you do with a warning?
 
 |think| Create tests you need, retire them when not
 ---------------------------------------------------
@@ -201,31 +206,15 @@ NLP (Natural Language Processing)
 
 ``Don't use "like" as an interjection``
 
-|cross| Arbitrary script / plugin
----------------------------------
+|cross| Just let me code
+------------------------
+
+Writing a plugin with access to knowledge of the document structure.
 
 Pre-built or hand-designed
 --------------------------
 
-What it checks
---------------
-
-Errors versus warnings
-----------------------
-
-An error must be fixed, and will cause a build to fail.
-
-A warning is just a warning.
-
-What do you do with them, if you have warnings?
-
-Plumbing in to CI (continuous integration)
-------------------------------------------
-
-Run the checks automatically when a review is requested (GitHub: PR) or before
-deploying the documentation.
-
-No errors before deployment...
+((**Do we adopt an existing set of checks, grow our own, or some combination**))
 
 Available tools
 ---------------
@@ -301,6 +290,56 @@ Rules are written as plugins using JavaScript.
 
 .. _textlint: https://textlint.github.io/
 
+Plumbing checks into docs-as-code
+---------------------------------
+
+Local checks
+------------
+
+In the editor - display messages as you're typing, or on saving
+
+At the command line - run a command to make the checks
+
+Checks before commit
+--------------------
+
+Don't allow ``commit`` if there are errors
+
+*This may be a bit extreme?*
+
+Checks before review
+--------------------
+
+Run checks when change are pushed for review.
+
+The reviewers can see the results
+
+Forbid merging if there are errors?
+
+*Seems more reasonable*
+
+On GitHub, use workflows for this
+
+Checks before deployment
+------------------------
+
+Don't deploy if there are errors
+
+*Probably a good idea* - **if** the previous stages mean this essentially
+never happens.
+
+
+Plumbing in to CI (continuous integration)
+------------------------------------------
+
+Run the checks automatically when a review is requested (GitHub: PR) or before
+deploying the documentation.
+
+No errors before deployment...
+
+What we do at Aiven
+-------------------
+
 
 Use in Aiven's developer documentation
 --------------------------------------
@@ -326,13 +365,13 @@ The checks we use
 * ``substitution`` "Use *this* instead of *that*"
 * ``conditional`` "If *this* then *that*" for `®` checking
 
-Use at the command line
------------------------
+At the command line
+-------------------
 
 ``make spell``
 
-Use in CI (continuous integration)
-----------------------------------
+In CI (continuous integration)
+------------------------------
 
 ...or making checks happen automatically when you push a PR (pull request) or
 otherwise put some text out for review
@@ -342,17 +381,16 @@ We use `vale-action`_, the official GitHub action for Vale
 .. _`vale-action`: https://github.com/errata-ai/vale-action
 
 
-Summary
--------
-
-((**Not final yet**))
+What have we learnt?
+--------------------
 
 * We can check things beyond spelling
 * Relatively simple techniques can be useful
-* Don't check for the sake of it
+* But don't check for the sake of it
 * There is a good choice of tools available
 * You don't have to build it yourself
-* You can check as part of your CI toolchain
+* You can check as part of your docs-as-code toolchain
+
 
 
 .. -----------------------------------------------------------------------------
@@ -364,11 +402,13 @@ Summary
 Fin
 ---
 
+Come join us on `Write the Docs slack`_ channel `#testthedocs`_
+
 Slides and accompanying material at https://github.com/tibs/beyond-spellchecking
 
 Written in reStructuredText_, converted to PDF using rst2pdf_
 
-|cc-attr-sharealike| This slideshow and its related files are released under a
+|cc-attr-sharealike| This slideshow is released under a
 `Creative Commons Attribution-ShareAlike 4.0 International License`_.
 
 .. image:: images/qr_beyond_spellchecking.png
@@ -386,3 +426,6 @@ Written in reStructuredText_, converted to PDF using rst2pdf_
 .. _`Write the Docs Prague 2022`: https://www.writethedocs.org/conf/prague/2022/
 .. _reStructuredText: http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html
 .. _rst2pdf: https://rst2pdf.org/
+.. _Aiven: https://aiven.io/
+.. _`Write the Docs slack`: https://writethedocs.slack.com
+.. _`#testthedocs`: https://writethedocs.slack.com/archives/CBWQQ5E57

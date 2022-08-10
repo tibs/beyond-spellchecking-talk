@@ -86,9 +86,29 @@ Makefile.
 Links mentioned in the slides
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These are the links mentioned in the slides, for convenience:
+For your convenience, these are the links mentioned in the slides:
 
-((**To be filled in from the content in the slide deck**))
+* Vale_
+* LTeX_ and LanguageTool_
+* alexjs_
+* proselint_
+* redpen_
+* textlint_
+* Aiven_ developer documentation: https://developer.aiven.io/ and
+  https://github.com/aiven/devportal
+* `Write the Docs slack`_ and the `#testthedocs`_ channel
+
+.. _Vale: https://vale.sh
+.. _LTeX: https://valentjn.github.io/ltex/
+.. _LanguageTool: https://languagetool.org/
+.. _alexjs: https://alexjs.com/
+.. _proselint: http://proselint.com/
+.. _redpen: https://redpen.cc/
+.. _textlint: https://textlint.github.io/
+.. _Aiven: https://aiven.io/
+.. _`Write the Docs slack`: https://writethedocs.slack.com
+.. _`#testthedocs`: https://writethedocs.slack.com/archives/CBWQQ5E57
+
 
 --------
 
