@@ -16,7 +16,7 @@ Beyond spellchecking - What else can we check automatically
 
        Spacer 0 10
 
-    Written in reStructuredText_, converted to PDF using rst2pdf_.
+    Written in reStructuredText_, converted to PDF using rst2pdf_
 
     .. raw:: pdf
 
@@ -58,12 +58,14 @@ stylistic problems in C code
 
 Named in analogy with pulling bits of fluff off fabric
 
-Simple checks, that can be fast, and give good results.
+Simple checks, that can be fast, and give good results
 
-But remember, text is not as restricted as code.
+But remember, text is not as restricted as code
 
 Types of check
 --------------
+
+Not an exhaustive list, but with example messages
 
 
 |cross| Spelling
@@ -74,6 +76,11 @@ Types of check
 |think| word versus token versus ...
 ------------------------------------
 
+``word`` - like in a dictionary
+
+``token`` - like in a parser - more general
+
+``expression`` - like a regular expression, a pattern to match
 
 |cross| Repetition
 ------------------
@@ -110,9 +117,9 @@ Types of check
 |think| Errors versus warnings
 ------------------------------
 
-An error must be fixed, and will cause a build to fail.
+An error must be fixed, and will cause a build to fail
 
-A warning is just a warning.
+A warning is just a warning
 
 What do you do with a warning?
 
@@ -126,6 +133,11 @@ you probably don't still need the check for ``"adn" should be replaced by "and"`
 |think| Against auto-correction
 -------------------------------
 
+Written text is complicated, and linting will sometimes find false positives
+
+Auto-correction can lead to unexpected results
+
+The final decision should be with a human
 
 |cross| Too many / too few
 --------------------------
@@ -137,8 +149,8 @@ you probably don't still need the check for ``"adn" should be replaced by "and"`
 
 ``Inconsistent spelling of 'center' and 'centre'``
 
-|cross| If *this* is present, then *that* must also be
-------------------------------------------------------
+|cross| If *this* is present, then we need *that*
+-------------------------------------------------
 
 ``WHO has no definition``
 
@@ -147,7 +159,7 @@ you probably don't still need the check for ``"adn" should be replaced by "and"`
 |think| scope
 -------------
 
-"Scope" - some part of a document.
+"Scope" - some part of a document
 
 ``Thing`` must be used with ® in the first *title* to use the name
 
@@ -209,12 +221,18 @@ NLP (Natural Language Processing)
 |cross| Just let me code
 ------------------------
 
-Writing a plugin with access to knowledge of the document structure.
+Writing a plugin with access to knowledge of the document structure
 
 Pre-built or hand-designed
 --------------------------
 
-((**Do we adopt an existing set of checks, grow our own, or some combination**))
+Adopt an existing package - Microsoft or Google styles
+
+Do that and add customisations
+
+Start from scratch and specify everything yourself
+
+...but if you do your own checks, consider contributing back to the community
 
 Available tools
 ---------------
@@ -233,12 +251,12 @@ Just a brief overview...
 Vale
 ----
 
-Vale_ is a command line tool, open source, offline for privacy.
+Vale_ is a command line tool, open source, offline for privacy
 
-Various packaged rulesets are available.
+Various packaged rulesets are available
 
 Rules ("Styles") are specified via YAML files that build on existing concepts,
-or (less often) via code in a Go-like language.
+or (less often) via code in a Go-like language
 
 .. _Vale: https://vale.sh
 
@@ -250,7 +268,7 @@ LanguageTool_
 
 BibTeX, ConTeXt, LaTeX, Markdown, Org, reStructuredText, R Sweave, and XHTML
 
-New rules for LanguageTool are stored as XML files.
+New rules for LanguageTool are stored as XML files
 
 .. _LTeX: https://valentjn.github.io/ltex/
 .. _LanguageTool: https://languagetool.org/
@@ -258,7 +276,7 @@ New rules for LanguageTool are stored as XML files.
 alexjs
 ------
 
-alexjs_ is designed to "Catch insensitive, inconsiderate writing" in markdown documents.
+alexjs_ is designed to "Catch insensitive, inconsiderate writing" in markdown documents
 
 .. _alexjs: https://alexjs.com/
 
@@ -286,7 +304,7 @@ textlint
 
 textlint_
 
-Rules are written as plugins using JavaScript.
+Rules are written as plugins using JavaScript
 
 .. _textlint: https://textlint.github.io/
 
@@ -310,7 +328,7 @@ Don't allow ``commit`` if there are errors
 Checks before review
 --------------------
 
-Run checks when change are pushed for review.
+Run checks when change are pushed for review
 
 The reviewers can see the results
 
@@ -326,44 +344,42 @@ Checks before deployment
 Don't deploy if there are errors
 
 *Probably a good idea* - **if** the previous stages mean this essentially
-never happens.
+never happens
 
 
 Plumbing in to CI (continuous integration)
 ------------------------------------------
 
 Run the checks automatically when a review is requested (GitHub: PR) or before
-deploying the documentation.
+deploying the documentation
 
 No errors before deployment...
 
 What we do at Aiven
 -------------------
 
-
-Use in Aiven's developer documentation
---------------------------------------
+We lint Aiven's developer documentation
 
 https://developer.aiven.io/ and https://github.com/aiven/devportal
 
 We use Vale
 -----------
 
-It's a small program, it's fast, it's very configurable.
+It's a small program, it's fast, it's portable, it's very configurable
 
-Development is ongoing, the code is readable, and the author responds fast.
+Development is ongoing, the code is readable, the author fixes bugs quickly
 
-It's well known in the WtD community.
+It's well known in the WtD community
 
-But we did (do) need to configure it, and it's a relatively small project.
+But we did (do) need to configure it, and it's a relatively small project
 
 The checks we use
 -----------------
 
-* ``spelling`` Spell checking - the default US-en dictionary, plus our own
-* ``capitalization`` Capitalisation in headings
-* ``substitution`` "Use *this* instead of *that*"
-* ``conditional`` "If *this* then *that*" for `®` checking
+* ``spelling`` - Spell checking - the default US-en dictionary, plus our own
+* ``capitalization`` - Capitalisation in headings
+* ``substitution`` - Use *this* instead of *that*
+* ``conditional`` - If *this* then *that*, for `®` checking
 
 At the command line
 -------------------
@@ -373,16 +389,18 @@ At the command line
 In CI (continuous integration)
 ------------------------------
 
-...or making checks happen automatically when you push a PR (pull request) or
-otherwise put some text out for review
-
 We use `vale-action`_, the official GitHub action for Vale
+
+We run checks:
+
+* For a PR (pull request)
+* When pushing to ``main`` (in theory...)
 
 .. _`vale-action`: https://github.com/errata-ai/vale-action
 
 
-What have we learnt?
---------------------
+|think| What have we learnt?
+----------------------------
 
 * We can check things beyond spelling
 * Relatively simple techniques can be useful
@@ -409,7 +427,7 @@ Slides and accompanying material at https://github.com/tibs/beyond-spellchecking
 Written in reStructuredText_, converted to PDF using rst2pdf_
 
 |cc-attr-sharealike| This slideshow is released under a
-`Creative Commons Attribution-ShareAlike 4.0 International License`_.
+`Creative Commons Attribution-ShareAlike 4.0 International License`_
 
 .. image:: images/qr_beyond_spellchecking.png
     :align: right
