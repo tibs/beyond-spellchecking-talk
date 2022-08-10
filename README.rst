@@ -2,9 +2,7 @@
 Beyond spellchecking - what else can we check automatically?
 ============================================================
 
-**NOTE** "Danger, Will Robinson!" - *This is still in early preparation. This is not yet a talk.* **ENOT**
-
-This is (will be) a talk for presentation at `Write the Docs Prague 2022`_,
+This is a talk for presentation at `Write the Docs Prague 2022`_,
 11th - 13th September 2022.
 
 It will be presented as a video - the link to that video will be added here
@@ -21,8 +19,8 @@ possible.
 The slides
 ~~~~~~~~~~
 
-The slides are (unsurprisingly) written using reStructuredText_, and thus
-intended to be readable as plain text.
+The slides are written using reStructuredText_, and thus intended to be
+readable as plain text.
 
 The sources for the slides are in `<slides.rst>`_.
 
@@ -37,8 +35,8 @@ for convenience.
 The PDF files may not always be as up-to-date as the source files, so check
 their timestamps.
 
-The QR code was generated using the command line program for qrencode_, which
-I installed with ``brew install qrencode`` on my Mac.
+The QR code on the final slide was generated using the command line program
+for qrencode_, which I installed with ``brew install qrencode`` on my Mac.
 
 .. _qrencode: https://fukuchi.org/works/qrencode/
 
