@@ -11,6 +11,7 @@ pageSetup:
     spacing-footer: 2mm
     firstTemplate: standardPage
 
+# Frames are [ left, bottom, width, height ]
 pageTemplates:
     standardPage:
         frames:
