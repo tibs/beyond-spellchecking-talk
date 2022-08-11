@@ -311,9 +311,9 @@ Just a brief overview...
 
 * Vale
 * LTeX and LanguageTool
-* alexjs
+* alex
 * proselint
-* redpen
+* RedPen
 * textlint
 
 Vale
@@ -338,50 +338,53 @@ LanguageTool_
 
 BibTeX, ConTeXt, LaTeX, Markdown, Org, reStructuredText, R Sweave, and XHTML
 
+English, French, German, Dutch, Chinese, Russian, etc.
+
 New rules for LanguageTool are stored as XML files
 
 .. _LTeX: https://valentjn.github.io/ltex/
 .. _LanguageTool: https://languagetool.org/
 
-alexjs
-------
+alex
+----
 
-alexjs_ is designed to "Catch insensitive, inconsiderate writing" in Markdown
+alex_ is designed to "Catch insensitive, inconsiderate writing" in Markdown
 documents, and offer alternatives
 
-.. _alexjs: https://alexjs.com/
+.. _alex: https://alexjs.com/
 
 proselint
 ---------
 
-proselint_
+proselint_ runs checks on Markdown files
 
-((**Say a little more**))
+It comes with its own set of checks built in
 
-Rules are written as plugins using Python
+New checks are written as plugins using Python
 
 .. _proselint: http://proselint.com/
 
-redpen
+RedPen
 ------
 
-redpen_
+RedPen_ validates texts in Markdown, Textile, AsciiDoc, reStructuredText and LaTeX
 
-((**Say a little more**))
+It supports multiple languages, including English, German, Japanese and Chinese
 
-Custom validators can be written as plugins in Java or JavaScript
+There is a catalogue of existing validators to choose from, and custom
+validators can be written as plugins in Java or JavaScript
 
-.. _redpen: https://redpen.cc/
-
+.. _RedPen: https://redpen.cc/
 
 textlint
 --------
 
-textlint_
+textlint_ supports Markdown and plain text by default, with plugins for HTML,
+reStructuredText, AsciiDoc, Re:VIEW and Org-mode
 
-((**Say a little more**))
+There is a catalogue of existing rules, which are installed using ``npm``
 
-Rules are written as plugins using JavaScript
+New rules are written as plugins using JavaScript
 
 .. _textlint: https://textlint.github.io/
 
