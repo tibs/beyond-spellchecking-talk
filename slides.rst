@@ -8,13 +8,7 @@ Beyond spellchecking - What else can we check automatically
 
     .. raw:: pdf
 
-       Spacer 0 10
-
-    Written in reStructuredText_, converted to PDF using rst2pdf_
-
-    .. raw:: pdf
-
-       Spacer 0 10
+       Spacer 0 30
 
     Slides and accompanying material at https://github.com/tibs/beyond-spellchecking
 
