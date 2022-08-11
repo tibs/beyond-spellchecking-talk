@@ -6,6 +6,9 @@ Beyond spell checking - what else can we check automatically?
 
 Talk to be given at WtD Prague 2022
 
+.. note:: *The slides are in some cases more up-to-date than this document -
+          this should be fixed soon.*
+
 .. contents::
 
 Abstract
@@ -667,7 +670,7 @@ For each:
 * Vale
 * textlint
 * proselint
-* redpen
+* RedPen
 * LanguageTool and LTeX
 
 
