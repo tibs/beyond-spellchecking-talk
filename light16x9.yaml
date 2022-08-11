@@ -78,6 +78,8 @@ styles:
         parent: bodytext
         spaceBefore: 0
 
+    # List items need a bit more spacing than the default style
+    # to stop them looking cramped together
     bullet-list-item:
         parent: bodytext
         spaceBefore: 12
@@ -86,6 +88,8 @@ styles:
         parent: bodytext
         spaceBefore: 0
 
+    # List items need a bit more spacing than the default style
+    # to stop them looking cramped together
     item-list-item:
         parent: bodytext
         spaceBefore: 12

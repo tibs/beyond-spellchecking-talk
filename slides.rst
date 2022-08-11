@@ -59,106 +59,137 @@ Not an exhaustive list, but with example messages
 |cross| Spelling
 ----------------
 
-``'arglebargle' does not seem to be a word``
+::
+
+  'arglebargle' does not seem to be a word
 
 .. raw:: pdf
 
-   Spacer 0 30
+   Spacer 0 10
 
-Ignores numbers, some punctuation...
+Ignore numbers, some punctuation...
+
+Can only report mistakes
 
 |think| But I really did mean ``arglebargle``
 ---------------------------------------------
 
-Sometimes, a mistake isn't a mistake::
+Sometimes, a mistake isn't a mistake ::
 
-  'arglebargle' is not actually a word.
+  For this, we shall invent the term 'arglebargle'.
+
+What to do?
 
 * Put up with it
 * Annotate in the text (``.. lint: off`` / ``.. lint: on``)
 * Configure to ignore ``arglebargle``
 * Configure to ignore ``arglebargle`` *in this file / location*
 
-|cross| Repetition
-------------------
+|think| Against auto-correction
+-------------------------------
 
-``'the' is repeated``
+Written text is complicated, and linting will find false positives
 
-::
+Auto-correction can lead to unexpected results
 
-    The cat
-    and the
-    the dog
+The final decision should be with a human
+
+..
+   |cross| Repetition
+   ------------------
+
+   ::
+
+     'the' is repeated
+
+   ::
+
+       The cat
+       and the
+       the dog
 
 |cross| Don't say that
 ----------------------
 
-``Consider not using 'it is obvious that'``
+::
+
+  Consider not using 'it is obvious that'
 
 |cross| Use *this* instead of *that* - errors
 ---------------------------------------------
 
-``Use 'and' instead of 'adn'``
+::
 
-``Use 'supersede' instead of 'supercede'``
+   Use 'and' instead of 'adn'
 
-``Use 'Aiven for Redis' instead of 'Aiven Redis'``
+::
 
-|cross| Use *this* instead of *that* - suggestions
---------------------------------------------------
+   Use 'supersede' instead of 'supercede'
 
-``Consider using 'flink' instead of 'flick'``
+::
 
-``Consider using 'for instance' instead of 'e.g.'``
+   Use 'Aiven for Redis' instead of 'Aiven Redis'
+
+|cross| Use *this* instead of *that* - warnings
+-----------------------------------------------
+
+::
+
+  Consider using 'flink' instead of 'flick'
+
+::
+
+  Consider using 'for instance' instead of 'e.g.'
 
 |think| Errors versus warnings
 ------------------------------
 
 An error must be fixed, and will cause a build to fail
 
-A warning is just a warning
+A warning is just a warning - perhaps "suggestion" is better
 
 What do you do with a warning?
 
 |think| Create tests you need, retire them when not
 ---------------------------------------------------
 
-if the person who mistypes ``adn`` leaves the team
+If the person who mistypes ``adn`` leaves the team
 
-you probably don't still need the check for ``"adn" should be replaced by "and"``
+You probably don't still need the check for ``"adn"`` -> ``"and"``
 
-|think| Against auto-correction
--------------------------------
+..
+   |cross| Too many / too few
+   --------------------------
 
-Written text is complicated, and linting will sometimes find false positives
+   ::
 
-Auto-correction can lead to unexpected results
-
-The final decision should be with a human
-
-|cross| Too many / too few
---------------------------
-
-``More than 3 commas in sentence``
+     More than 3 commas in sentence
 
 |cross| One or the other, not both
 ----------------------------------
 
-``Inconsistent spelling of 'center' and 'centre'``
+::
+
+  Inconsistent spelling of 'center' and 'centre'
 
 |cross| If *this* is present, then we need *that*
 -------------------------------------------------
 
-``WHO has no definition``
+::
 
-``At least one use of 'PostgreSQL' must be marked as ®``
+  WHO has no definition
+
+::
+
+
+  At least one use of 'PostgreSQL' must be marked as ®
 
 |think| word versus token versus ...
 ------------------------------------
 
 ``word`` - like in a dictionary
 
-``token`` - like in a parser - more general
+``token`` - like in a parser, more general
 
 ``expression`` - like a regular expression, a pattern to match
 
@@ -167,24 +198,30 @@ The final decision should be with a human
 
 "Scope" - some part of a document
 
-``Thing`` must be used with ® in the first *title* to use the name
+* ``Thing`` must be used with ® in the first *title* to use the name
 
-``Thing`` must be used with ® in the first non-title to use the name
+.. comment to force start of a new list, to separate the items
 
-First use of ``Thing`` *must* be with ®, regardless
+* ``Thing`` must be used with ® in the first *non-title* to use the name
+
+.. comment to force start of a new list, to separate the items
+
+* First use of ``Thing`` must be with ®, regardless
 
 |cross| Capitalisation
 ----------------------
 
-``'Badly Capitalised Heading' should be in sentence case``
+::
+
+    Badly Capitalised Heading' should be in sentence case
 
 But consider carefully:
 
-``iPhone prices``
+    ``iPhone prices``
 
-``The importance of NASA``
+    ``The importance of NASA``
 
-``Remembering Terry Jones``
+    ``Remembering Terry Jones``
 
 
 |cross| Looking at the raw text
@@ -192,42 +229,55 @@ But consider carefully:
 
 Checking reStructuredText:
 
-``One backtick without a role becomes italics``
+::
 
-``Use reStructuredText link format, not markdown``
+  One backtick without a role becomes italics
+
+::
+
+  Use reStructuredText link format, not markdown
 
 Checking markdown:
 
-``Two backticks is redundant - did you mean just one?``
+::
+
+  Two backticks is redundant - did you mean just one?
 
 
 |think| Checking for absence
 ----------------------------
 
-For instance, that all images have ``alt`` text
+For instance, that all images have ``alt`` text ::
 
-``Image is missing alt text``
+  Image is missing alt text
 
 Not the same as "is zero length" - we want *structural element* occurs zero times
 
 |cross| Arbitrary metrics
 -------------------------
 
-``Try to keep the Flesch-Kincaid grade level (12) below 8``
+::
+
+  Try to keep the Flesch-Kincaid grade level (12) below 8
 
 |cross| Sentence analysis
 -------------------------
 
-NLP (Natural Language Processing)
+NLP (Natural Language Processing) ::
 
-``Did you mean "cars are" instead of "car's are"``
+  Did you mean "cars are" instead of "car's are"
 
-``Don't use "like" as an interjection``
+::
+
+  Don't use "like" as an interjection
 
 |cross| Just let me code
 ------------------------
 
 Writing a plugin with access to knowledge of the document structure
+
+What to use for the task
+------------------------
 
 Pre-built or hand-designed
 --------------------------
@@ -371,13 +421,17 @@ https://developer.aiven.io/ and https://github.com/aiven/devportal
 We use Vale
 -----------
 
-It's a small program, it's fast, it's portable, it's very configurable
+* It's a small program, it's fast, it's portable, it's very configurable
 
-Development is ongoing, the code is readable, the author fixes bugs quickly
+* Development is ongoing, the code is readable, the author fixes bugs quickly
 
-It's well known in the WtD community
+* It's well known in the WtD community
 
-But we did (do) need to configure it, and it's a relatively small project
+But...
+
+* It's a relatively small project
+
+* We did (do) need to configure it
 
 The checks we use
 -----------------
