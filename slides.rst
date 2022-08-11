@@ -31,7 +31,7 @@ Introduction
 Writing documentation is hard, and spotting errors in that documentation is
 harder. What can we do to help?
 
-* "Linting"
+* Automated checking: "Linting"
 * A review of checks we might make
 * Adopt existing checks or grow your own
 * Some tools
@@ -71,8 +71,8 @@ Ignore numbers, some punctuation...
 
 Can only report mistakes
 
-|think| But I really did mean ``arglebargle``
----------------------------------------------
+|think| But I really did mean ``arglebargle``!
+----------------------------------------------
 
 Sometimes, a mistake isn't a mistake ::
 
@@ -81,7 +81,8 @@ Sometimes, a mistake isn't a mistake ::
 What to do?
 
 * Put up with it
-* Annotate in the text (``.. lint: off`` / ``.. lint: on``)
+* Mark it up differently (e.g., as "literal" text)
+* Configure in the text (``.. lint: off`` / ``.. lint: on``)
 * Configure to ignore ``arglebargle``
 * Configure to ignore ``arglebargle`` *in this file / location*
 
@@ -146,9 +147,9 @@ The final decision should be with a human
 
 An error must be fixed, and will cause a build to fail
 
-A warning is just a warning - perhaps "suggestion" is better
+A warning is just a warning - a "suggestion"
 
-What do you do with a warning?
+What do you do after you get a warning?
 
 |think| Create tests you need, retire them when not
 ---------------------------------------------------
@@ -206,14 +207,14 @@ You probably don't still need the check for ``"adn"`` -> ``"and"``
 
 .. comment to force start of a new list, to separate the items
 
-* First use of ``Thing`` must be with ®, regardless
+* ``Thing`` must be used with ® the very first time it occurs
 
 |cross| Capitalisation
 ----------------------
 
 ::
 
-    Badly Capitalised Heading' should be in sentence case
+    'Badly Capitalised Heading' should be in sentence case
 
 But consider carefully:
 
@@ -235,9 +236,9 @@ Checking reStructuredText:
 
 ::
 
-  Use reStructuredText link format, not markdown
+  Use reStructuredText link format, not Markdown
 
-Checking markdown:
+Checking Markdown:
 
 ::
 
@@ -253,12 +254,25 @@ For instance, that all images have ``alt`` text ::
 
 Not the same as "is zero length" - we want *structural element* occurs zero times
 
+In HTML, ``alt=`` in ``<img src="image.jpg" alt="..">``
+
+In reStructuredText, ``:alt:`` inside ``image`` directive
+
 |cross| Arbitrary metrics
 -------------------------
 
 ::
 
   Try to keep the Flesch-Kincaid grade level (12) below 8
+
+.. raw:: pdf
+
+   Spacer 0 5
+
+This is calculated as something like
+
+  ``(0.39 * (words / sentences)) +``
+  ``(11.8 * (syllables / words)) - 15.59``
 
 |cross| Sentence analysis
 -------------------------
@@ -307,12 +321,14 @@ Just a brief overview...
 Vale
 ----
 
-Vale_ is a command line tool, open source, offline for privacy
+Vale_ supports checking in Markdownm, HTML, reStructuredText, AsciiDoc, DITA
+XML, Org and code (comments / docstrings).
 
-Various packaged rulesets are available
-
-Rules ("Styles") are specified via YAML files that build on existing concepts,
+Rules ("styles") are specified via YAML files that build on existing concepts,
 or (less often) via code in a Go-like language
+
+Various pre-packaged rulesets are available
+
 
 .. _Vale: https://vale.sh
 
@@ -332,7 +348,7 @@ New rules for LanguageTool are stored as XML files
 alexjs
 ------
 
-alexjs_ is designed to "Catch insensitive, inconsiderate writing" in markdown documents
+alexjs_ is designed to "Catch insensitive, inconsiderate writing" in Markdown documents
 
 .. _alexjs: https://alexjs.com/
 
