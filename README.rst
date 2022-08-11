@@ -22,9 +22,9 @@ For your convenience, these are the links mentioned in the slides:
 
 * Vale_
 * LTeX_ and LanguageTool_
-* alexjs_
+* alex_
 * proselint_
-* redpen_
+* RedPen_
 * textlint_
 * Aiven_ developer documentation: https://developer.aiven.io/ and
   https://github.com/aiven/devportal
@@ -33,9 +33,9 @@ For your convenience, these are the links mentioned in the slides:
 .. _Vale: https://vale.sh
 .. _LTeX: https://valentjn.github.io/ltex/
 .. _LanguageTool: https://languagetool.org/
-.. _alexjs: https://alexjs.com/
+.. _alex: https://alexjs.com/
 .. _proselint: http://proselint.com/
-.. _redpen: https://redpen.cc/
+.. _RedPen: https://redpen.cc/
 .. _textlint: https://textlint.github.io/
 .. _Aiven: https://aiven.io/
 .. _`Write the Docs slack`: https://writethedocs.slack.com
