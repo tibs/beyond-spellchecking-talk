@@ -74,7 +74,7 @@ Can only report mistakes
 |think| But I really did mean ``arglebargle``!
 ----------------------------------------------
 
-Sometimes, a mistake isn't a mistake ::
+::
 
   For this, we shall invent the term 'arglebargle'.
 
@@ -145,7 +145,7 @@ The final decision should be with a human
 |think| Errors versus warnings
 ------------------------------
 
-An error must be fixed, and will cause a build to fail
+An error must be fixed, the document is wrong
 
 A warning is just a warning - a "suggestion"
 
