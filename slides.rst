@@ -10,12 +10,6 @@ Beyond spellchecking - What else can we check automatically
 
        Spacer 0 10
 
-    Presented at `Write the Docs Prague 2022`_
-
-    .. raw:: pdf
-
-       Spacer 0 10
-
     Written in reStructuredText_, converted to PDF using rst2pdf_
 
     .. raw:: pdf
