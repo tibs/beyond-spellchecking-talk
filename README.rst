@@ -15,6 +15,31 @@ possible.
 .. _`Write the Docs Prague 2022`: https://www.writethedocs.org/conf/prague/2022/
 .. _CamPUG: https://www.meetup.com/CamPUG/
 
+Links mentioned in the slides
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For your convenience, these are the links mentioned in the slides:
+
+* Vale_
+* LTeX_ and LanguageTool_
+* alexjs_
+* proselint_
+* redpen_
+* textlint_
+* Aiven_ developer documentation: https://developer.aiven.io/ and
+  https://github.com/aiven/devportal
+* `Write the Docs slack`_ and the `#testthedocs`_ channel
+
+.. _Vale: https://vale.sh
+.. _LTeX: https://valentjn.github.io/ltex/
+.. _LanguageTool: https://languagetool.org/
+.. _alexjs: https://alexjs.com/
+.. _proselint: http://proselint.com/
+.. _redpen: https://redpen.cc/
+.. _textlint: https://textlint.github.io/
+.. _Aiven: https://aiven.io/
+.. _`Write the Docs slack`: https://writethedocs.slack.com
+.. _`#testthedocs`: https://writethedocs.slack.com/archives/CBWQQ5E57
 
 The slides
 ~~~~~~~~~~
@@ -24,10 +49,10 @@ readable as plain text.
 
 The sources for the slides are in `<slides.rst>`_.
 
-(Note that github will present the ``.rst`` files in rendered form as HTML,
+Note that github will present the ``.rst`` files in rendered form as HTML,
 albeit using their own styling (which is occasionally a bit odd). If you want
 to see the original reStructuredText source, you have to click on the "Raw"
-link at the top of the file's page.)
+link at the top of the file's page.
 
 The PDF slides at 16x9 aspect ratio (`<rst-slides-16x9.pdf>`_) are stored here
 for convenience.
@@ -48,10 +73,10 @@ as a stand-alone document - we'll see how that goes...
 
 The sources for the notes are in `<notes.rst>`_
 
-(Note that github will present the ``.rst`` files in rendered form as HTML,
+Note that github will present the ``.rst`` files in rendered form as HTML,
 albeit using their own styling (which is occasionally a bit odd). If you want
 to see the original reStructuredText source, you have to click on the "Raw"
-link at the top of the file's page.)
+link at the top of the file's page.
 
 For convenience, there will also be a PDF rendering of the notes,
 `<notes.pdf>`_
@@ -80,32 +105,6 @@ Makefile.
 
 .. _CamPUG: https://www.meetup.com/CamPUG/
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
-
-Links mentioned in the slides
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-For your convenience, these are the links mentioned in the slides:
-
-* Vale_
-* LTeX_ and LanguageTool_
-* alexjs_
-* proselint_
-* redpen_
-* textlint_
-* Aiven_ developer documentation: https://developer.aiven.io/ and
-  https://github.com/aiven/devportal
-* `Write the Docs slack`_ and the `#testthedocs`_ channel
-
-.. _Vale: https://vale.sh
-.. _LTeX: https://valentjn.github.io/ltex/
-.. _LanguageTool: https://languagetool.org/
-.. _alexjs: https://alexjs.com/
-.. _proselint: http://proselint.com/
-.. _redpen: https://redpen.cc/
-.. _textlint: https://textlint.github.io/
-.. _Aiven: https://aiven.io/
-.. _`Write the Docs slack`: https://writethedocs.slack.com
-.. _`#testthedocs`: https://writethedocs.slack.com/archives/CBWQQ5E57
 
 
 --------
