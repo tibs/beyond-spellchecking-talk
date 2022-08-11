@@ -316,12 +316,10 @@ Just a brief overview...
 * redpen
 * textlint
 
-((**Do I want one slide per tool, or just to talk over the list?**))
-
 Vale
 ----
 
-Vale_ supports checking in Markdownm, HTML, reStructuredText, AsciiDoc, DITA
+Vale_ supports checking in Markdown, HTML, reStructuredText, AsciiDoc, DITA,
 XML, Org and code (comments / docstrings).
 
 Rules ("styles") are specified via YAML files that build on existing concepts,
@@ -348,7 +346,8 @@ New rules for LanguageTool are stored as XML files
 alexjs
 ------
 
-alexjs_ is designed to "Catch insensitive, inconsiderate writing" in Markdown documents
+alexjs_ is designed to "Catch insensitive, inconsiderate writing" in Markdown
+documents, and offer alternatives
 
 .. _alexjs: https://alexjs.com/
 
@@ -356,6 +355,8 @@ proselint
 ---------
 
 proselint_
+
+((**Say a little more**))
 
 Rules are written as plugins using Python
 
@@ -366,6 +367,8 @@ redpen
 
 redpen_
 
+((**Say a little more**))
+
 Custom validators can be written as plugins in Java or JavaScript
 
 .. _redpen: https://redpen.cc/
@@ -375,6 +378,8 @@ textlint
 --------
 
 textlint_
+
+((**Say a little more**))
 
 Rules are written as plugins using JavaScript
 
