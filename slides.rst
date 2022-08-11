@@ -35,16 +35,16 @@ harder. What can we do to help?
 * A review of checks we might make
 * Adopt existing checks or grow your own
 * Some tools
-* Plumbing checks into "docs-as-code"
+* Plumbing checks into docs-as-code
 * What we do at Aiven
 
 "linting"
 ---------
 
-``lint`` was the name of a program written in 1978 to find common errors and
-stylistic problems in C code
+``lint`` was a program written in 1978 to find common errors and stylistic
+problems in C code
 
-Named in analogy with pulling bits of fluff off fabric
+``lint`` = bits of fluff on fabric, hence *linting*, to remove them
 
 Simple checks, that can be fast, and give good results
 
@@ -59,16 +59,25 @@ Not an exhaustive list, but with example messages
 |cross| Spelling
 ----------------
 
-``'Arglebargle' does not seem to be a word``
+``'arglebargle' does not seem to be a word``
 
-|think| word versus token versus ...
-------------------------------------
+.. raw:: pdf
 
-``word`` - like in a dictionary
+   Spacer 0 30
 
-``token`` - like in a parser - more general
+Ignores numbers, some punctuation...
 
-``expression`` - like a regular expression, a pattern to match
+|think| But I really did mean ``arglebargle``
+---------------------------------------------
+
+Sometimes, a mistake isn't a mistake::
+
+  'arglebargle' is not actually a word.
+
+* Put up with it
+* Annotate in the text (``.. lint: off`` / ``.. lint: on``)
+* Configure to ignore ``arglebargle``
+* Configure to ignore ``arglebargle`` *in this file / location*
 
 |cross| Repetition
 ------------------
@@ -144,6 +153,15 @@ The final decision should be with a human
 
 ``At least one use of 'PostgreSQL' must be marked as ®``
 
+|think| word versus token versus ...
+------------------------------------
+
+``word`` - like in a dictionary
+
+``token`` - like in a parser - more general
+
+``expression`` - like a regular expression, a pattern to match
+
 |think| scope
 -------------
 
@@ -169,7 +187,7 @@ But consider carefully:
 ``Remembering Terry Jones``
 
 
-|think| Looking at the raw text
+|cross| Looking at the raw text
 -------------------------------
 
 Checking reStructuredText:

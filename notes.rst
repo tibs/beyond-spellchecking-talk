@@ -9,7 +9,7 @@ Talk to be given at WtD Prague 2022
 .. contents::
 
 Abstract
-========
+--------
 
 Writing documentation is hard, and spotting errors in that documentation is
 harder. Luckily, if we're working in a docs-as-code environment, we can apply
@@ -30,17 +30,12 @@ At the end I'll demonstrate how to implement some of these techniques, using
 the example of Aiven's open source developer documentation. I'll make sure to
 include my favourite check, for the correct usage of `®` on product names.
 
-Outline
-=======
-
-*(To be gradually filled in)*
-
 Introduction
 ------------
 
-.. note:: This started out as the "Who and Why" section of the proposal.
+.. note:: *This started out as the "Who and Why" section of the proposal.
           Some of it can be re-used as the "Introduction", but it needs a good
-          pruning!
+          pruning!*
 
 As a software developer until the end of 2021, I've been used to both
 automated checking of source code (linting) and also code review. Both are
@@ -71,17 +66,15 @@ our github review process.
 Origins of "linting"
 --------------------
 
-Quick (very quick) history of the term linting
+``lint`` was the name of a program written in 1978 to find common errors and
+stylistic problems in C code, and it is indeed named in analogy with pulling
+bits of fluff off fabric. Classically, linting programs don't actually
+*understand* the programming language they're analysing - they use a set of
+heuristics and rules to recognise common patterns that are likely to be mistakes.
+That same approach can be applied to our documentation, and it can be
+surprisingly powerful.
 
-  ``lint`` was the name of a program written in 1978 to find common errors and
-  stylistic problems in C code, and it is indeed named in analogy with pulling
-  bits of fluff off fabric. Classically, linting programs don't actually
-  *understand* the programming language they're analysing - they use a set of
-  heuristics and rules to recognise common patterns that are likely to be mistakes.
-  That same approach can be applied to our documentation, and it can be
-  surprisingly powerful.
-
-So we're after simple checks, that can be fast, and give good results.
+In summary, we're after simple checks, that can be fast, and give good results.
 
 Text is *not* code - code has rigorous restrictions that do not apply
 to text. However, that doesn't mean that we can't take the idea of
@@ -98,11 +91,11 @@ Types of check
 So let's work through what sorts of check we might make with a linter, and
 think about some of the implications.
 
-.. note:: I've definitely taken inspiration from Vale for much of this, but
+.. note:: *I've definitely taken inspiration from Vale for much of this, but
           that's partly because I think it has a reasonable set of tests that
-          we can look at.
+          we can look at.*
 
-          The slides are almost certainly not going to address all of these!
+          *The slides are almost certainly not going to address all of these!*
 
 Spelling
 ~~~~~~~~
