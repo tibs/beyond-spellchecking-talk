@@ -225,6 +225,12 @@ But consider carefully:
     ``Remembering Terry Jones``
 
 
+Checking beyond the text itself
+-------------------------------
+
+Some tests aren't just looking at the text of the document
+
+
 |cross| Looking at the raw text
 -------------------------------
 
