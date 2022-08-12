@@ -2,12 +2,9 @@
 Beyond spell checking - what else can we check automatically?
 =============================================================
 
-(Was "Linting your docs")
+By Tibs / Tony Ibbs (they / he)
 
-Talk to be given at WtD Prague 2022
-
-.. note:: *The slides are in some cases more up-to-date than this document -
-          this should be fixed soon.*
+A talk to be given at WtD Prague 2022
 
 .. contents::
 
@@ -85,20 +82,20 @@ to text. However, that doesn't mean that we can't take the idea of
 out the limits of "simple checks" and "great benefit".
 
 
-
 Types of check
 --------------
-
-*"What we might check"*
 
 So let's work through what sorts of check we might make with a linter, and
 think about some of the implications.
 
+This is not meant to be an exhaustive list.
+
+I shall illustrate with example error messages - these are not necessarily
+real, and I don't necessarily know how to produce them.
+
 .. note:: *I've definitely taken inspiration from Vale for much of this, but
           that's partly because I think it has a reasonable set of tests that
           we can look at.*
-
-          *The slides are almost certainly not going to address all of these!*
 
 Spelling
 ~~~~~~~~
@@ -173,29 +170,35 @@ have with checking ``mailto:`` items using Vale?)
   Note: uses the dictionary as a word list, but doesn't support all Hunspell
   capabilities. For instance, it doesn't support ``KEEPCASE`` (and ``/K``).
 
-Aside: word versus token versus ...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-What is the unit of what we are checking?
+Aside: But I really did mean ``arglebargle``!
+---------------------------------------------
 
-It's not as simple as words, because sometimes we want to test for a phrase.
+::
 
-And even words aren't simple - they can include spaces (well, one can argue
-that) and definitely some other sorts of punctuation (``see-saw``, ``can't``).
+  For this, we shall invent the term 'arglebargle'.
 
-The term often used in programming, when parsing texts, is token, and that's
-not a bad name.
+What to do?
 
-But often one also wants a *pattern* - something that describes the thing to
-be matched. Typical patterns incude regular expressions (there's a lot to
-these, and they can get very complicated, but as a simple example, ``Tib+s``
-matches ``Ti`` followed by one or more ``b`` followed by ``s``, so ``Tibs``,
-``Tibbs``, ``Tibbbs`` and so on) and "globbing expressions", where the only
-"wildcards" are that ``?`` matches any single character and ``*`` matches any
-zero or more characters.
+* Put up with it
+* Mark it up differently (e.g., as "literal" text)
+* Configure in the text (``.. lint: off`` / ``.. lint: on``)
+* Configure to ignore ``arglebargle``
+* Configure to ignore ``arglebargle`` *in this file / location*
+
+Aside: Why auto-correction is not (generally) a (good) thing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Corollary of only being able to spot (things that might be) errors: we can't
+do automated correction of text, because we'd have too many false positives.
+(This might not actually be true in certrain well constrained cases, like the
+``adn`` case, but is still probably not worth doing - that particular problem
+is better addressed in the text editor.)
 
 Repetition
 ~~~~~~~~~~
+
+.. note:: Not in the slides
 
 Example message:
 
@@ -244,13 +247,13 @@ Use *this* instead of *that*
 
 Example messages:
 
-* Actual errors:
+* Errors:
 
   * ``Use 'and' instead of 'adn'``
   * ``Use 'supersede' instead of 'supercede'``
   * ``Use 'Aiven for PostgreSQL' instead of 'Aiven PostgreSQL'``
 
-* Suggestions:
+* Warnings (or perhaps "suggestions" would be a better term):
 
   * ``Consider using 'flink' instead of 'flick'``
   * ``Consider using 'for instance' instead of 'e.g.'``
@@ -286,6 +289,35 @@ for PostgreSQL``.
   *We use this, although all our examples are currently treated as errors,
   rather than suggestions*
 
+Aside: Errors versus warnings
+-----------------------------
+
+An error must be fixed, the document is wrong
+
+A warning is just a warning - a "suggestion"
+
+What do you do after you get a warning?
+
+----------------------
+
+The problem of false positives
+
+* Should one mark, in the text, that this is not an error?
+* If one does that too much, then surely the rule is not useful
+* Possible difficulty of fine-grained "ignore this" markup - not so good
+  if it's paragraph level
+* Is one saying "ignore all checks", or "ignore specific checks"
+
+Programming linters don't have so much problem with this - marking up a
+line to ignore is already fairly fine grained in most programming languages.
+And the tests are generally hard-coded in the linter, so generally have an
+id, and it's possible to say "ignore just this specific test".
+
+That's a bit harder if we're using a *framework* to define new tests.
+
+So, marking parts of the text as "do not check" - is this a good idea, a
+sometimes good idea, a useful compromise, or just awful?
+
 Aside: Create tests you need, retire them when they're not
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -294,17 +326,10 @@ help, and consider reviewing them periodically to check if that is still true.
 If the person who always mistypes ``adn`` leaves the team, then we probably
 don't still need the error message telling us that ``"adn" should be replaced by "and"``.
 
-Aside: Why auto-correction is not (generally) a (good) thing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Corollary of only being able to spot (things that might be) errors: we can't
-do automated correction of text, because we'd have too many false positives.
-(This might not actually be true in certrain well constrained cases, like the
-``adn`` case, but is still probably not worth doing - that particular problem
-is better addressed in the text editor.)
-
 Too many / too few
 ~~~~~~~~~~~~~~~~~~
+
+.. note:: Not in slides
 
 Example message:
 
@@ -326,8 +351,8 @@ Example message:
 
    Ensures key and value do not occur in the same scope.
 
-If *this* is present, then *that* must also be present
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If *this* is present, then we need *that*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Example messages:
 
@@ -361,6 +386,27 @@ We use this for the `®` checks ((*either explain here or late...*))
   Terminology on this one is a bit confusing.
 
   *We use this*
+
+Aside: word versus token versus ...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+What is the unit of what we are checking?
+
+It's not as simple as words, because sometimes we want to test for a phrase.
+
+And even words aren't simple - they can include spaces (well, one can argue
+that) and definitely some other sorts of punctuation (``see-saw``, ``can't``).
+
+The term often used in programming, when parsing texts, is token, and that's
+not a bad name.
+
+But often one also wants a *pattern* - something that describes the thing to
+be matched. Typical patterns incude regular expressions (there's a lot to
+these, and they can get very complicated, but as a simple example, ``Tib+s``
+matches ``Ti`` followed by one or more ``b`` followed by ``s``, so ``Tibs``,
+``Tibbs``, ``Tibbbs`` and so on) and "globbing expressions", where the only
+"wildcards" are that ``?`` matches any single character and ``*`` matches any
+zero or more characters.
 
 Aside: scope
 ~~~~~~~~~~~~
@@ -414,8 +460,8 @@ oddities.
 
   *We use this*
 
-Aside: Looking at the raw text
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Looking at the raw text
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Example messages:
 
@@ -469,8 +515,8 @@ source or the HTML. I haven't had time to investigare yet.
 ((*I should probably find out before finishing this talk - but actually it
 doesn't really matter, because the concept is the same regardless*))
 
-Aside: Checking for absence
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Checking for absence
+~~~~~~~~~~~~~~~~~~~~
 
 Example message:
 
@@ -508,6 +554,11 @@ Example message:
 
 * ``Try to keep the Flesch-Kincaid grade level (12) below 8``
 
+This is calculated as something like
+
+  ``(0.39 * (words / sentences)) +``
+  ``(11.8 * (syllables / words)) - 15.59``
+
 May mean hardcoded support for named metrics, or may mean a general mechanism
 for doing arithemetic on the number of tokens according to their type, scope,
 etc.
@@ -518,10 +569,11 @@ etc.
 
   Calculates one of various arbitrary metrics and reports if it is exceeded.
 
-NLP (Natural Language Processing) sentence analysis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sentence analysis
+~~~~~~~~~~~~~~~~~
 
-((*There must be a better subtitle for that!*))
+Using NLP (Natural Language Processing) to categorise the words in a sentence,
+and then make rules about their combination.
 
 Example message:
 
@@ -529,6 +581,8 @@ Example message:
 
   (from a rule for checking that a plural is used before ```are``, rather than
   ``'s'``)
+
+* ``Don't use "like" as an interjection``
 
 NLP can allow limiting checks to particular parts of speech, etc.
 
@@ -543,8 +597,8 @@ NLP can allow limiting checks to particular parts of speech, etc.
 
   Example at https://vale.sh/explorer/apos_are/, Detect extraneous apostrophes before 'are'.
 
-Arbitrary script / plugin
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Just let me code: Arbitrary script / plugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. admonition:: Vale ``script``
 
@@ -605,51 +659,86 @@ If the program allows hand-written plugins (in Go, Python or whatever) then
 these may have access to the original file, and that then allows the plugin to
 do whatever it may need to do.
 
-Errors versus warnings
-----------------------
 
-The problem of false positives
+Available tools
+---------------
 
-* Should one mark, in the text, that this is not an error?
-* If one does that too much, then surely the rule is not useful
-* Possible difficulty of fine-grained "ignore this" markup - not so good
-  if it's paragraph level
-* Is one saying "ignore all checks", or "ignore specific checks"
+Just a brief overview...
 
-Programming linters don't have so much problem with this - marking up a
-line to ignore is already fairly fine grained in most programming languages.
-And the tests are generally hard-coded in the linter, so generally have an
-id, and it's possible to say "ignore just this specific test".
+* Vale
+* LTeX and LanguageTool
+* alex
+* proselint
+* RedPen
+* textlint
 
-That's a bit harder if we're using a *framework* to define new tests.
+Vale
 
-So, marking parts of the text as "do not check" - is this a good idea, a
-sometimes good idea, a useful compromise, or just awful?
+  Vale_ supports checking in Markdown, HTML, reStructuredText, AsciiDoc, DITA,
+  XML, Org and code (comments / docstrings).
 
+  Rules ("styles") are specified via YAML files that build on existing concepts,
+  or (less often) via code in a Go-like language
 
-Plumbing in to CI
------------------
+  Various pre-packaged rulesets are available
 
-CI (Continuous Integration) - specifically thinking of checking a github PR or equivalent
+  .. _Vale: https://vale.sh
 
-This essentially add the following requirements (or at least desirables):
+LTeX and LanguageTool
 
-* runs as a command line tool
-* has a provided workflow or is easy to run in on
-* configuration can be stored in the repository being checked, or specified on
-  the command line
-* preferably runs *fast*, and/or can run only on the subset of documents that
-  have been changed.
-* mustn't add artefacts to the (filesystem), or if it does they should be
-  ignored by git or whatever (this *might* be logs) - I think this is somewhat
-  undesirable anyway
-* doesn't need to talk to the cloud
+  LTeX_ provides offline grammar checking of various markup languages using
+  LanguageTool_
 
-What have I forgotten?
+  BibTeX, ConTeXt, LaTeX, Markdown, Org, reStructuredText, R Sweave, and XHTML
 
+  English, French, German, Dutch, Chinese, Russian, etc.
 
-Tools
------
+  New rules for LanguageTool are stored as XML files
+
+  .. _LTeX: https://valentjn.github.io/ltex/
+  .. _LanguageTool: https://languagetool.org/
+
+alex
+
+  alex_ is designed to "Catch insensitive, inconsiderate writing" in Markdown
+  documents, and offer alternatives
+
+  .. _alex: https://alexjs.com/
+
+proselint
+
+  proselint_ runs checks on Markdown files
+
+  It comes with its own set of checks built in
+
+  New checks are written as plugins using Python
+
+  .. _proselint: http://proselint.com/
+
+RedPen
+
+  RedPen_ validates texts in Markdown, Textile, AsciiDoc, reStructuredText and LaTeX
+
+  It supports multiple languages, including English, German, Japanese and Chinese
+
+  There is a catalogue of existing validators to choose from, and custom
+  validators can be written as plugins in Java or JavaScript
+
+  .. _RedPen: https://redpen.cc/
+
+textlint
+
+  textlint_ supports Markdown and plain text by default, with plugins for HTML,
+  reStructuredText, AsciiDoc, Re:VIEW and Org-mode
+
+  There is a catalogue of existing rules, which are installed using ``npm``
+
+  New rules are written as plugins using JavaScript
+
+  .. _textlint: https://textlint.github.io/
+
+What I'd written before
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Not attempting a complete overview of the field
 
@@ -673,9 +762,81 @@ For each:
 * RedPen
 * LanguageTool and LTeX
 
+Plumbing in to docs-as-code
+---------------------------
 
-Use in Aiven's developer documentation
---------------------------------------
+Local checks
+~~~~~~~~~~~~
+
+In the editor - display messages as you're typing, or on saving
+
+At the command line - run a command to make the checks
+
+Checks before commit
+~~~~~~~~~~~~~~~~~~~~
+
+Don't allow ``commit`` if there are errors
+
+*This may be a bit extreme?*
+
+Checks before review
+~~~~~~~~~~~~~~~~~~~~
+
+Run checks when change are pushed for review
+
+The reviewers can see the results
+
+Forbid merging if there are errors?
+
+*Seems more reasonable*
+
+On GitHub, use workflows for this
+
+Checks before deployment
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Don't deploy if there are errors
+
+*Probably a good idea* - **if** the previous stages mean this essentially
+never happens
+
+
+Plumbing in to CI (continuous integration)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Run the checks automatically when a review is requested (GitHub: PR) or before
+deploying the documentation
+
+No errors before deployment...
+
+-----------------
+
+CI (Continuous Integration) - specifically thinking of checking a github PR or equivalent
+
+This essentially add the following requirements (or at least desirables):
+
+* runs as a command line tool
+* has a provided workflow or is easy to run in on
+* configuration can be stored in the repository being checked, or specified on
+  the command line
+* preferably runs *fast*, and/or can run only on the subset of documents that
+  have been changed.
+* mustn't add artefacts to the (filesystem), or if it does they should be
+  ignored by git or whatever (this *might* be logs) - I think this is somewhat
+  undesirable anyway
+* doesn't need to talk to the cloud
+
+What have I forgotten?
+
+
+
+What we do at Aiven
+-------------------
+
+
+
+
+
 
 We use Vale
 ~~~~~~~~~~~
