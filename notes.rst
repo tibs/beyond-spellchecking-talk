@@ -186,6 +186,28 @@ What to do?
 * Configure to ignore ``arglebargle``
 * Configure to ignore ``arglebargle`` *in this file / location*
 
+----------------------
+
+*Earlier text:*
+
+The problem of false positives
+
+* Should one mark, in the text, that this is not an error?
+* If one does that too much, then surely the rule is not useful
+* Possible difficulty of fine-grained "ignore this" markup - not so good
+  if it's paragraph level
+* Is one saying "ignore all checks", or "ignore specific checks"
+
+Programming linters don't have so much problem with this - marking up a
+line to ignore is already fairly fine grained in most programming languages.
+And the tests are generally hard-coded in the linter, so generally have an
+id, and it's possible to say "ignore just this specific test".
+
+That's a bit harder if we're using a *framework* to define new tests.
+
+So, marking parts of the text as "do not check" - is this a good idea, a
+sometimes good idea, a useful compromise, or just awful?
+
 Aside: Why auto-correction is not (generally) a (good) thing
 ------------------------------------------------------------
 
@@ -297,26 +319,6 @@ An error must be fixed, the document is wrong
 A warning is just a warning - a "suggestion"
 
 What do you do after you get a warning?
-
-----------------------
-
-The problem of false positives
-
-* Should one mark, in the text, that this is not an error?
-* If one does that too much, then surely the rule is not useful
-* Possible difficulty of fine-grained "ignore this" markup - not so good
-  if it's paragraph level
-* Is one saying "ignore all checks", or "ignore specific checks"
-
-Programming linters don't have so much problem with this - marking up a
-line to ignore is already fairly fine grained in most programming languages.
-And the tests are generally hard-coded in the linter, so generally have an
-id, and it's possible to say "ignore just this specific test".
-
-That's a bit harder if we're using a *framework* to define new tests.
-
-So, marking parts of the text as "do not check" - is this a good idea, a
-sometimes good idea, a useful compromise, or just awful?
 
 Aside: Create tests you need, retire them when they're not
 ----------------------------------------------------------

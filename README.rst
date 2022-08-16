@@ -20,16 +20,17 @@ Links mentioned in the slides
 
 For your convenience, these are the links mentioned in the slides:
 
+* Aiven_, where I work, and our developer documentation at
+  https://developer.aiven.io/ and https://github.com/aiven/devportal
 * Vale_
 * LTeX_ and LanguageTool_
 * alex_
 * proselint_
 * RedPen_
 * textlint_
-* Aiven_ developer documentation: https://developer.aiven.io/ and
-  https://github.com/aiven/devportal
 * `Write the Docs slack`_ and the `#testthedocs`_ channel
 
+.. _Aiven: https://aiven.io/
 .. _Vale: https://vale.sh
 .. _LTeX: https://valentjn.github.io/ltex/
 .. _LanguageTool: https://languagetool.org/
@@ -37,7 +38,6 @@ For your convenience, these are the links mentioned in the slides:
 .. _proselint: http://proselint.com/
 .. _RedPen: https://redpen.cc/
 .. _textlint: https://textlint.github.io/
-.. _Aiven: https://aiven.io/
 .. _`Write the Docs slack`: https://writethedocs.slack.com
 .. _`#testthedocs`: https://writethedocs.slack.com/archives/CBWQQ5E57
 

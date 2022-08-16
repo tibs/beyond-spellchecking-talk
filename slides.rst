@@ -69,6 +69,10 @@ Not an exhaustive list, but with example messages
 
 Ignore numbers, some punctuation...
 
+Capitalisation, names
+
+Multiple dictionaries
+
 Can only report mistakes
 
 |think| But I really did mean ``arglebargle``!
@@ -172,6 +176,7 @@ You probably don't still need the check for ``"adn"`` -> ``"and"``
 ::
 
   Inconsistent spelling of 'center' and 'centre'
+
 
 |cross| If *this* is present, then we need *that*
 -------------------------------------------------
@@ -388,7 +393,7 @@ textlint
 textlint_ supports Markdown and plain text by default, with plugins for HTML,
 reStructuredText, AsciiDoc, Re:VIEW and Org-mode
 
-There is a catalogue of existing rules, which are installed using ``npm``
+Starts with no rules installed, use ``npm`` to install rules by name.
 
 New rules are written as plugins using JavaScript
 
@@ -433,8 +438,8 @@ Don't deploy if there are errors
 never happens
 
 
-Plumbing in to CI (continuous integration)
-------------------------------------------
+Use in CI (continuous integration)
+----------------------------------
 
 Run the checks automatically when a review is requested (GitHub: PR) or before
 deploying the documentation
