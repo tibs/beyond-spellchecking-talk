@@ -9,7 +9,7 @@ A talk to be given at WtD Prague 2022
 .. contents::
 
 Abstract
---------
+========
 
 Writing documentation is hard, and spotting errors in that documentation is
 harder. Luckily, if we're working in a docs-as-code environment, we can apply
@@ -31,7 +31,7 @@ the example of Aiven's open source developer documentation. I'll make sure to
 include my favourite check, for the correct usage of `®` on product names.
 
 Introduction
-------------
+============
 
 .. note:: *This started out as the "Who and Why" section of the proposal.
           Some of it can be re-used as the "Introduction", but it needs a good
@@ -64,7 +64,7 @@ about how we use these techniques in our own environment, and specifically in
 our github review process.
 
 Origins of "linting"
---------------------
+====================
 
 ``lint`` was the name of a program written in 1978 to find common errors and
 stylistic problems in C code, and it is indeed named in analogy with pulling
@@ -83,7 +83,7 @@ out the limits of "simple checks" and "great benefit".
 
 
 Types of check
---------------
+==============
 
 So let's work through what sorts of check we might make with a linter, and
 think about some of the implications.
@@ -98,7 +98,7 @@ real, and I don't necessarily know how to produce them.
           we can look at.*
 
 Spelling
-~~~~~~~~
+--------
 
 Example message:
 
@@ -187,7 +187,7 @@ What to do?
 * Configure to ignore ``arglebargle`` *in this file / location*
 
 Aside: Why auto-correction is not (generally) a (good) thing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------
 
 Corollary of only being able to spot (things that might be) errors: we can't
 do automated correction of text, because we'd have too many false positives.
@@ -196,7 +196,7 @@ do automated correction of text, because we'd have too many false positives.
 is better addressed in the text editor.)
 
 Repetition
-~~~~~~~~~~
+----------
 
 .. note:: Not in the slides
 
@@ -229,7 +229,7 @@ and thus is it worth actually adding a test for it?
    Looks for repetition of its tokens.
 
 Don't say that
-~~~~~~~~~~~~~~
+--------------
 
 Example message:
 
@@ -243,7 +243,7 @@ Examples might include complaining about use of the words ``simply`` and
   Look to see if particular tokens exist. Supports exceptions.
 
 Use *this* instead of *that*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 Example messages:
 
@@ -319,7 +319,7 @@ So, marking parts of the text as "do not check" - is this a good idea, a
 sometimes good idea, a useful compromise, or just awful?
 
 Aside: Create tests you need, retire them when they're not
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------------------
 
 If we're creating our own checks, only create ones that actually
 help, and consider reviewing them periodically to check if that is still true.
@@ -327,7 +327,7 @@ If the person who always mistypes ``adn`` leaves the team, then we probably
 don't still need the error message telling us that ``"adn" should be replaced by "and"``.
 
 Too many / too few
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. note:: Not in slides
 
@@ -341,7 +341,7 @@ Example message:
    - e.g., ``sentence``
 
 One or the other, not both
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 Example message:
 
@@ -352,7 +352,7 @@ Example message:
    Ensures key and value do not occur in the same scope.
 
 If *this* is present, then we need *that*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 Example messages:
 
@@ -388,7 +388,7 @@ We use this for the `®` checks ((*either explain here or late...*))
   *We use this*
 
 Aside: word versus token versus ...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 What is the unit of what we are checking?
 
@@ -409,7 +409,7 @@ matches ``Ti`` followed by one or more ``b`` followed by ``s``, so ``Tibs``,
 zero or more characters.
 
 Aside: scope
-~~~~~~~~~~~~
+------------
 
 The ability to take control in which parts of the document structure a check is applied.
 
@@ -434,7 +434,7 @@ to be able to say this per-section.)
   checks in scope "link" for links that have names like ``this``.
 
 Capitalisation
-~~~~~~~~~~~~~~
+--------------
 
 Example message:
 
@@ -461,7 +461,7 @@ oddities.
   *We use this*
 
 Looking at the raw text
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Example messages:
 
@@ -516,7 +516,7 @@ source or the HTML. I haven't had time to investigare yet.
 doesn't really matter, because the concept is the same regardless*))
 
 Checking for absence
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Example message:
 
@@ -548,7 +548,7 @@ even the absence of a scope within a scope).
   directly supported...*))
 
 Arbitrary metrics
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Example message:
 
@@ -570,7 +570,7 @@ etc.
   Calculates one of various arbitrary metrics and reports if it is exceeded.
 
 Sentence analysis
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Using NLP (Natural Language Processing) to categorise the words in a sentence,
 and then make rules about their combination.
@@ -598,7 +598,7 @@ NLP can allow limiting checks to particular parts of speech, etc.
   Example at https://vale.sh/explorer/apos_are/, Detect extraneous apostrophes before 'are'.
 
 Just let me code: Arbitrary script / plugin
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 .. admonition:: Vale ``script``
 
@@ -614,7 +614,7 @@ is rarer, probably because it's harder to come up with the set of templates
 formed, what the user has to enter to use them).
 
 Pre-built or hand-designed
---------------------------
+==========================
 
 *"How to get started"*
 
@@ -633,7 +633,7 @@ the tool chosen:
   canned style", but it's possible some tools also allow this)
 
 What it checks
---------------
+==============
 
 .. note:: This is an important point, but quite likely beyond the scope of the
           slides, and possibly beyond the scope of this whole document - it's
@@ -661,7 +661,7 @@ do whatever it may need to do.
 
 
 Available tools
----------------
+===============
 
 Just a brief overview...
 
@@ -738,7 +738,7 @@ textlint
   .. _textlint: https://textlint.github.io/
 
 What I'd written before
-~~~~~~~~~~~~~~~~~~~~~~~
+=======================
 
 Not attempting a complete overview of the field
 
@@ -763,24 +763,24 @@ For each:
 * LanguageTool and LTeX
 
 Plumbing in to docs-as-code
----------------------------
+===========================
 
 Local checks
-~~~~~~~~~~~~
+------------
 
 In the editor - display messages as you're typing, or on saving
 
 At the command line - run a command to make the checks
 
 Checks before commit
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Don't allow ``commit`` if there are errors
 
 *This may be a bit extreme?*
 
 Checks before review
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Run checks when change are pushed for review
 
@@ -793,7 +793,7 @@ Forbid merging if there are errors?
 On GitHub, use workflows for this
 
 Checks before deployment
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Don't deploy if there are errors
 
@@ -802,7 +802,7 @@ never happens
 
 
 Plumbing in to CI (continuous integration)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 Run the checks automatically when a review is requested (GitHub: PR) or before
 deploying the documentation
@@ -831,20 +831,15 @@ What have I forgotten?
 
 
 What we do at Aiven
--------------------
-
-
-
-
-
+===================
 
 We use Vale
-~~~~~~~~~~~
+-----------
 
 ...
 
 The checks we use
-~~~~~~~~~~~~~~~~~
+-----------------
 
 ``devportal/.vale.ini`` ::
 
@@ -875,14 +870,14 @@ and::
 and a variety of other ``first_<thing>_is_registered.yml`` rules.
 
 Use at the command line
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code:: bash
 
   $ make spell
 
 Use in CI
-~~~~~~~~~
+---------
 
 We use the provided `vale-action`_, the official GitHub action for Vale.
 
@@ -918,14 +913,11 @@ Our ``devportal/.github/workflows/lint.yaml`` is something like the following:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 
---------------
+----------
 
-From the proposal
-=================
+From the proposal - About me
+============================
 
-
-Other Information
------------------
 
 I've been a software developer since the 1980s, and some form of documentarian
 almost as long (albeit without the use of the term). I used to recommend TeX,
@@ -940,7 +932,7 @@ appropriate use of `®` marks, as it turned out that there was a bug in the
 relevant part of Vale, now fixed after my first PR to the project.
 
 
---------------
+----------
 
 Notes that may be incorporated elsewhere
 ========================================
@@ -1068,7 +1060,8 @@ From twitter (7 August 2022):
 
   🤔
 
---------------
+
+----------
 
 For reference: particular tools
 ===============================
@@ -1304,10 +1297,10 @@ See also https://lwn.net/Articles/822969/ (Tools to improve Englist text) from 2
   https://github.com/redpen-cc/redpen/ - Looks as if custom validators can be
   added as plugins in Java or JavaScript
 
-
+----------
 
 Somewhat related - accessibility checking
------------------------------------------
+=========================================
 
 There's a much bigger world of checking things beyond the text itself, including
 colour usage, layout, and so on. It clearly overlaps with what we're interested
@@ -1352,15 +1345,15 @@ Possibly useful links
 .. _`run using a local server`: https://dev.languagetool.org/http-server
 
 
---------------
+---------
 
-Appendix: Write the Docs Writing Day
-====================================
+License
+=======
 
-The first proper day of WtD Prague is normally a "Writing" day, where people
-can collaborate on tasks, or work on individual tasks (in company).
+|cc-attr-sharealike| These notes are released under a
+`Creative Commons Attribution-ShareAlike 4.0 International License`_.
 
-It's probably a good idea to try to have a Vale or lint-the-docs "table" at
-the writing day, and work on some rules, or perhaps even some of the Vale
-issues I want to work on. ("Having a table" just means suggesting it on the
-day.)
+.. |cc-attr-sharealike| image:: images/cc-attribution-sharealike-88x31.png
+   :alt: CC-Attribution-ShareAlike image
+
+.. _`Creative Commons Attribution-ShareAlike 4.0 International License`: http://creativecommons.org/licenses/by-sa/4.0/
