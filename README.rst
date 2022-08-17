@@ -21,7 +21,8 @@ Links mentioned in the slides
 For your convenience, these are the links mentioned in the slides:
 
 * Aiven_, where I work, and our developer documentation at
-  https://developer.aiven.io/ and https://github.com/aiven/devportal
+  https://docs.aiven.io/ (this used to be https://developer.aiven.io/) and
+  https://github.com/aiven/devportal
 * Vale_
 * LTeX_ and LanguageTool_
 * alex_

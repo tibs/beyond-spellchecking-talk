@@ -69,9 +69,9 @@ Not an exhaustive list, but with example messages
 
 Ignore numbers, some punctuation...
 
-Capitalisation, names
+.. Capitalisation, names
 
-Multiple dictionaries
+.. Multiple dictionaries
 
 Can only report mistakes
 
@@ -451,7 +451,7 @@ What we do at Aiven
 
 We lint Aiven's developer documentation
 
-https://developer.aiven.io/ and https://github.com/aiven/devportal
+https://docs.aiven.io/ and https://github.com/aiven/devportal
 
 We use Vale
 -----------
