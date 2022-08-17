@@ -73,6 +73,8 @@ The slide notes
 There are also notes for the slides. The intent is that these are readable
 as a stand-alone document - we'll see how that goes...
 
+  (The notes may continue to change until after `Write the Docs Prague 2022`_.)
+
 The sources for the notes are in `<notes.rst>`_
 
 Note that github will present the ``.rst`` files in rendered form as HTML,
