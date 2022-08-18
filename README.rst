@@ -8,9 +8,8 @@ This is a talk for presentation at `Write the Docs Prague 2022`_,
 It will be presented as a video - the link to that video will be added here
 when it is available.
 
-It will (probably) also be presented beforehand as a live talk at CamPUG_
-on 6th September 2022 - a link to the meetup page will also be added when
-possible.
+It may also be presented beforehand as a live talk at CamPUG_
+on 6th September 2022 - a link to the meetup page will also be added if so.
 
 .. _`Write the Docs Prague 2022`: https://www.writethedocs.org/conf/prague/2022/
 .. _CamPUG: https://www.meetup.com/CamPUG/
