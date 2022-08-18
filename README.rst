@@ -20,9 +20,15 @@ Links mentioned in the slides
 For your convenience, these are the links mentioned in the slides:
 
 * Aiven_, where I work, and our developer documentation at
-  https://docs.aiven.io/ and https://github.com/aiven/devportal
+  https://docs.aiven.io/
+
   (The talk video uses the older https://developer.aiven.io/ - the change to
   ``docs`` was made just after I'd recorded it. The old URL will continue to work.)
+
+  The sources for our documentation are at https://github.com/aiven/devportal,
+  and there is a brief `README on how we use Vale`_ (that last isn't mentioned
+  in the slides).
+
 * Vale_
 * LTeX_ and LanguageTool_
 * alex_
@@ -41,6 +47,7 @@ For your convenience, these are the links mentioned in the slides:
 .. _textlint: https://textlint.github.io/
 .. _`Write the Docs slack`: https://writethedocs.slack.com
 .. _`#testthedocs`: https://writethedocs.slack.com/archives/CBWQQ5E57
+.. _`README on how we use Vale`: https://github.com/aiven/devportal/blob/main/.github/vale/README.rst
 
 The slides
 ~~~~~~~~~~
