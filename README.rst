@@ -2,17 +2,11 @@
 Beyond spellchecking - what else can we check automatically?
 ============================================================
 
-This is a talk for presentation at `Write the Docs Prague 2022`_,
-11th - 13th September 2022.
-
-It will be presented as a video - the link to that video will be added here
-when it is available.
-
-It may also be presented beforehand as a live talk at CamPUG_
-on 6th September 2022 - a link to the meetup page will also be added if so.
+This talk was presented at `Write the Docs Prague 2022`_,
+11th - 13th September 2022. The vidoe (and subsequent Q&A) can be seen at
+https://www.youtube.com/watch?v=8NukYx5ggCM
 
 .. _`Write the Docs Prague 2022`: https://www.writethedocs.org/conf/prague/2022/
-.. _CamPUG: https://www.meetup.com/CamPUG/
 
 Links mentioned in the slides
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
