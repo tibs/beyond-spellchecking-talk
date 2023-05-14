@@ -3,7 +3,7 @@ Beyond spellchecking - what else can we check automatically?
 ============================================================
 
 This talk was presented at `Write the Docs Prague 2022`_,
-11th - 13th September 2022. The vidoe (and subsequent Q&A) can be seen at
+11th - 13th September 2022. The video (and subsequent Q&A) can be seen at
 https://www.youtube.com/watch?v=8NukYx5ggCM
 
 .. _`Write the Docs Prague 2022`: https://www.writethedocs.org/conf/prague/2022/
